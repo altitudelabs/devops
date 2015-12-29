@@ -3,7 +3,17 @@ Altitude Labs Devops
 
 Note: deploy-node-app, deploy-blog roles needs work
 
-Creates new EC2 instance it
+## Getting Started
+
+Create and configure the following files:
+
+* production: host file for production instances; from hosts.sample
+* staging: host file for staging instances; from hosts.sample
+* env_vars/base.yml: global configurations from base.sample.yml
+
+## Commands
+
+Create EC2 instance and add to host file
 ```
 ansible-playbook -i staging aws.yml
 ```

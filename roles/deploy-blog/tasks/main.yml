@@ -12,5 +12,5 @@
     copy: src=post-receive dest=/home/ubuntu/repos/evalend-blog/hooks/post-receive
 
   - name: Drop reverse proxy config for nginx
-    copy: src=evalend-blog.nginx.conf dest=/etc/nginx/sites-enabled/evalend-blog.conf
+    copy: src=nginx.conf dest=/etc/nginx/sites-enabled/{{ project_blog_name }}.conf
     notify: restart nginx
