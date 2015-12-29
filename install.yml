@@ -6,10 +6,9 @@
     gather_facts: True  #We need to re-enable this, as we turned it off earlier.
     roles:
       - common
-      - redis
       - nginx
-      - zeromq
       - mongodb
+      - nodejs
       - { role: pm2, tags: ['pm2'] }
       - { role: deploy-node-app, tags: ['deploy'] }
       - { role: deploy-blog, tags: ['blog'] }
