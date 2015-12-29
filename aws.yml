@@ -14,9 +14,10 @@
       image: ami-96f1c1c4
       region: ap-southeast-1
       keypair: altitudelabs
+      instance_name: altitudelabs
     tasks:
       - name: Launch new Instance
-        local_action: ec2 instance_tags="Name=metisa" group={{ security_group }} instance_type={{ instance_type}} image={{ image }} wait=true region={{ region }} keypair={{ keypair }}
+        local_action: ec2 instance_tags="Name={{ instance_name }}" group={{ security_group }} instance_type={{ instance_type}} image={{ image }} wait=true region={{ region }} keypair={{ keypair }}
         register: ec2
 
       - name: Add instance to local host group
