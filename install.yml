@@ -4,8 +4,17 @@
     sudo: yes # On EC2 nodes, this is automatically passwordless.
     remote_user: ubuntu # This is the username for all ubuntu images, rather than root, or something weird.
     gather_facts: True  #We need to re-enable this, as we turned it off earlier.
+    # vars_files:
+    #   - env_vars/base.yml
     vars_files:
       - env_vars/base.yml
+    vars_prompt:
+      - name: "githubuser"
+        prompt: "Enter your github username"
+        private: no
+      - name: "githubpassword"
+        prompt: "Enter your github password"
+        private: yes
     roles:
       - common
       - nginx
@@ -13,4 +22,3 @@
       - nodejs
       - { role: pm2, tags: ['pm2'] }
       - { role: deploy-node-app, tags: ['deploy'] }
-      - { role: deploy-blog, tags: ['blog'] }
