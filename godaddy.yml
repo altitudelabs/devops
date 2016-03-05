@@ -1,0 +1,21 @@
+# Creates new Ubuntu instance for Metisa
+
+---
+# Effectively lifted from the Ansible documentation on EC2:
+# http://docs.ansible.com/ec2_module.html
+  - name: GoDaddy
+    hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
+    sudo: yes # On EC2 nodes, this is automatically passwordless.
+    remote_user: ubuntu # This is the username for all ubuntu images, rather than root, or something weird.
+    gather_facts: True  #We need to re-enable this, as we turned it off earlier.
+    vars_files:
+      - env_vars/base.yml
+    vars_prompt:
+      - name: "godaddy_username"
+        prompt: "Enter your godaddy username"
+        private: no
+      - name: "godaddy_password"
+        prompt: "Enter your godaddy password"
+        private: yes
+    roles:
+      - godaddy

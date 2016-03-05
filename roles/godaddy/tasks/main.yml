@@ -1,0 +1,39 @@
+---
+  - name: Create godaddy directory under /home/ubuntu for {{ application_name }}
+    file: path=/home/ubuntu/godaddy state=directory mode=755
+
+  # - name: Git checkout from github
+  #   git: repo={{ git_repo }}
+  #        dest=/home/ubuntu/repos/{{ project_name }}/
+
+  #  - name: Copy post-receive web hook
+  #    copy: src=thingy.super.conf dest=/etc/supervisor/conf.d/thingy.conf
+  #
+#  - name: Drop reverse proxy config for nginx
+#    copy: src=site.nginx.conf dest=/etc/nginx/sites-enabled/site.conf
+#    notify: restart nginx
+  - name: Create the godaddy py file
+    template: src=add-subdomain.py
+              dest=/home/ubuntu/godaddy
+              backup=yes
+              mode=u+x
+    tags: createfile
+
+  - name: Install pip package from apt
+    apt: name={{ item }} state=present
+    with_items:
+    - python-pip
+    - python-nose
+
+  - name: install pyGoDaddy
+    sudo: yes
+    sudo_user: ubuntu
+    action: shell sudo pip install git+git://github.com/claneys/pygodaddy.git
+
+  - name: Execute pyGoDaddy
+    sudo: yes
+    sudo_user: ubuntu
+    action: shell sudo python /home/ubuntu/godaddy/add-subdomain.py
+
+  - name: Delete pyGoDaddy file
+    action: shell sudo rm -R /home/ubuntu/godaddy
