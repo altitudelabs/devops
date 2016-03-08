@@ -1,9 +1,0 @@
-GIT_WORK_TREE=/home/bitnami/lynk git checkout -f
-
-cd /home/bitnami/lynk
-npm install
-
-# restart pm2
-#/opt/bitnami/nodejs/bin/pm2 kill
-#NODE_ENV=production /opt/bitnami/nodejs/bin/pm2 start /home/bitnami/lynk/server/app.js
-/opt/bitnami/nodejs/bin/pm2 reload lynk

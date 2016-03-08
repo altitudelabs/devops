@@ -1,0 +1,37 @@
+---
+  - name: Create autodeploy directory under /home/ubuntu for {{ application_name }}
+    file: path=/home/ubuntu/autodeploy state=directory mode=755
+
+  # - name: Git checkout from github
+  #   git: repo={{ git_repo }}
+  #        dest=/home/ubuntu/repos/{{ project_name }}/
+
+  #  - name: Copy post-receive web hook
+  #    copy: src=thingy.super.conf dest=/etc/supervisor/conf.d/thingy.conf
+  #
+#  - name: Drop reverse proxy config for nginx
+#    copy: src=site.nginx.conf dest=/etc/nginx/sites-enabled/site.conf
+#    notify: restart nginx
+  - name: Install daemon package from apt
+    apt: name={{ item }} state=present
+    with_items:
+    - daemon
+
+  - name: Create the GitAutoDeploy file
+    template: src=GitAutoDeploy.py
+              dest=/home/ubuntu/autodeploy
+              backup=yes
+              mode=u+x
+    tags: createfile
+
+  - name: Create the GitAutoDeploy config file
+    template: src=GitAutoDeploy.conf.json
+              dest=/home/ubuntu/autodeploy
+              backup=yes
+              mode=u+x
+    tags: createfile
+
+  - name: Start GitAutoDeploy with pm2
+    sudo: yes
+    sudo_user: ubuntu
+    shell: chdir=/home/ubuntu/autodeploy pm2 start GitAutoDeploy.py --name "GitAutoDeploy"

@@ -1,39 +1,29 @@
 ---
-  - name: Create godaddy directory under /home/ubuntu for {{ application_name }}
-    file: path=/home/ubuntu/godaddy state=directory mode=755
-
-  # - name: Git checkout from github
-  #   git: repo={{ git_repo }}
-  #        dest=/home/ubuntu/repos/{{ project_name }}/
-
-  #  - name: Copy post-receive web hook
-  #    copy: src=thingy.super.conf dest=/etc/supervisor/conf.d/thingy.conf
-  #
-#  - name: Drop reverse proxy config for nginx
-#    copy: src=site.nginx.conf dest=/etc/nginx/sites-enabled/site.conf
-#    notify: restart nginx
-  - name: Create the godaddy py file
-    template: src=add-subdomain.py
-              dest=/home/ubuntu/godaddy
-              backup=yes
-              mode=u+x
-    tags: createfile
-
-  - name: Install pip package from apt
+  - name: <1/6> Install pip package from apt
     apt: name={{ item }} state=present
     with_items:
     - python-pip
-    - python-nose
 
-  - name: install pyGoDaddy
-    sudo: yes
-    sudo_user: ubuntu
-    action: shell sudo pip install git+git://github.com/claneys/pygodaddy.git
+  - name: <2/6> Install pyGoDaddy from github
+    become: yes
+    become_user: ubuntu
+    action: shell pip install git+git://github.com/claneys/pygodaddy.git
 
-  - name: Execute pyGoDaddy
-    sudo: yes
-    sudo_user: ubuntu
-    action: shell sudo python /home/ubuntu/godaddy/add-subdomain.py
+  - name: <3/6> Create the godaddy.py file
+    template: src=godaddy.py
+              dest=/home/ubuntu/
+              backup=yes
+              mode=u+x
 
-  - name: Delete pyGoDaddy file
-    action: shell sudo rm -R /home/ubuntu/godaddy
+  - name: <4/6> Execute godaddy.py
+    become: yes
+    become_user: ubuntu
+    action: shell python /home/ubuntu/godaddy.py {{ godaddy_username }} {{ godaddy_password }}
+    register: godaddy
+    ignore_errors: True
+
+  - name: <5/6> Print result
+    debug: msg="success = {{ godaddy.stdout!="" }}, site = {{ nginx_server_name }}"
+
+  - name: <6/6> Delete godaddy.py
+    file: path=/home/ubuntu/godaddy.py state=absent
