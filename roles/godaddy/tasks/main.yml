@@ -7,7 +7,7 @@
   - name: <2/6> Install pyGoDaddy from github
     become: yes
     become_user: ubuntu
-    action: shell pip install git+git://github.com/claneys/pygodaddy.git
+    action: shell sudo pip install git+git://github.com/claneys/pygodaddy.git
 
   - name: <3/6> Create the godaddy.py file
     template: src=godaddy.py

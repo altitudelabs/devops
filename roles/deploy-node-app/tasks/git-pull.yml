@@ -1,0 +1,11 @@
+---
+  - name: Pull from GitHub <1/3> Create directory under /home/ubuntu for {{ application_name }}
+    file: path=/home/ubuntu/{{ application_name }} state=directory mode=775
+
+  - name: Pull from GitHub <2/3> Set permission to folder
+    become: yes
+    become_user: ubuntu
+    shell: chdir=/home/ubuntu sudo chown -R ubuntu {{ application_name }}
+
+  - name: Pull from GitHub <3/3> Get stuff from git
+    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ application_name }} accept_hostkey=yes version={{ git_branch }} key_file=/home/ubuntu/.ssh/github_rsa

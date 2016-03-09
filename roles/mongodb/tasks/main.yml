@@ -7,7 +7,7 @@
    apt_repository: repo="deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" state=present update_cache=yes
 # See, that gives us the option to run apt-get update after too!
 
- - name: Install MongoDB Packages and requirements
+ - name: Install MongoDB Packages and requirements (~3min)
    apt: pkg={{ item }} state=installed force=yes
    with_items:
      - mongodb-10gen

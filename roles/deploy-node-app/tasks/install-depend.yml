@@ -1,0 +1,10 @@
+---
+  - name: Install dependencies <1/3> npm install (takes longer than you think) (5~10min)
+    npm: path=/home/ubuntu/{{ application_name }}
+
+  - name: Install dependencies <2/3> npm install bower -g
+    npm: name=bower global=yes
+
+  - name: Install dependencies <3/3> bower install
+    bower: path=/home/ubuntu/{{ application_name }}
+    ignore_errors: True

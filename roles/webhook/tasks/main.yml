@@ -19,6 +19,12 @@
     sudo_user: ubuntu
     shell: chdir=/home/ubuntu/autodeploy pm2 start GitAutoDeploy.py --name "GitAutoDeploy"
     register: pm2status
+    failed_when: "'ERROR' in pm2status.stderr"
+    ignore_errors: True
 
-  - name: <5/5> Print PM2 status
+  - name:  <5/5>  Print pm2 status
     debug: var=pm2status.stdout_lines
+
+  - name: <5/5> Print pm2 error
+    debug: var=pm2status.stderr
+    when: "'ERROR' in pm2status.stderr"

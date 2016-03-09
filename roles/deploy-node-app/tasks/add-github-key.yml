@@ -1,0 +1,45 @@
+---
+  - name: Add Deploy Key <1/6> Add SSH private key
+    template: src=github_rsa
+              dest=/home/ubuntu/.ssh
+              backup=yes
+
+  - name: Add Deploy Key <2/6> Add SSH public key
+    template: src=github_rsa.pub
+              dest=/home/ubuntu/.ssh
+              backup=yes
+
+
+  - name: Add Deploy Key <3/6> chmod ~/.ssh
+    become: yes
+    become_user: ubuntu
+    shell: sudo chmod 700 /home/ubuntu/.ssh
+    tags: ssh
+
+  - name: Add Deploy Key <4/6> chmod ~/.ssh/github_rsa
+    become: yes
+    become_user: ubuntu
+    shell: sudo chmod 600 /home/ubuntu/.ssh/github_rsa
+    tags: ssh
+
+  - name: Add Deploy Key <5/6> chmod ~/.ssh/github_rsa.pub
+    become: yes
+    become_user: ubuntu
+    shell: sudo chmod 600 /home/ubuntu/.ssh/github_rsa.pub
+    tags: ssh
+
+  - name: Add Deploy Key <6/6> Get public key
+    shell: sudo cat /home/ubuntu/.ssh/github_rsa.pub
+    register: ps
+
+  - name: Add Deploy Key <6/6> Please add the following public key as github repo Deloy key
+    become: yes
+    become_user: ubuntu
+    debug: var=ps.stdout_lines
+
+  - pause: prompt="!!! Please add the above public key as github repo Deloy key !!!, then press Enter"
+#  - name: ssh add key
+#    sudo: yes
+#    sudo_user: ubuntu
+#    shell: eval $(ssh-agent) && sudo ssh-add /home/ubuntu/.ssh/id_rsa
+#    tags: ssh

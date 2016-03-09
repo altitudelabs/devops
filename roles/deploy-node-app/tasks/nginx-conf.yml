@@ -1,0 +1,13 @@
+---
+  - name: Nginx Config <1/2> Create the Nginx configuration file without SSL
+    template: src=nginx_site_config.j2
+              dest=/etc/nginx/sites-enabled/{{ application_name }}
+              backup=yes
+    notify: reload nginx
+    when: nginx_with_ssl is undefined or nginx_with_ssl == false
+    tags: nginx
+
+  - name: Nginx Config <2/2> Restart Nginx
+    become: yes
+    become_user: ubuntu
+    shell: sudo service nginx restart
