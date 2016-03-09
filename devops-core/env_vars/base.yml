@@ -1,0 +1,18 @@
+---
+application_name:                       template
+instance_name:                          template-staging
+nginx_server_name:                      template.altitudelabs.com
+nginx_server_port:                      7777
+
+git_path:                               altitudelabs/nodeJS_template
+git_branch:                             master
+
+app_js:                                 server.js
+bashrc_env_var: |
+                                        PORT={{ nginx_server_port }}
+                                        NODE_ENV=production
+pm2_start_var:                          PORT={{ nginx_server_port }} NODE_ENV=production
+
+git_autodeploy_port:                    8001
+git_autodeploy_pull_shell:              sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'
+git_autodeploy_deploy_shell:            npm install && pm2 restart app

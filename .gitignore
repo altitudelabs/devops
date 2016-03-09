@@ -1,4 +1,3 @@
 # Ignore configuration files
 production
 staging
-env_vars/base.yml
