@@ -1,20 +1,25 @@
 Altitude Labs Devops
 ===
+
+Aims: Automatically do thesecreate ec2 instance, install, deploy repo, run server, add subdomain and webhook Github.
+
 ## Things you need
 * This repo
 * Github Project (You need Collaborators permission to access 'Setting' page )
 * AWS access key and secret key
 * Godaddy username and password
+* altitudelabs.pem
 
 ## Getting Started - Mac OSX
 
-1. Copy all files and folder under you project root folder:
+* Install ansible using `pip install ansible` if you have not.
+* ssh add private key if you have not.
+```
+eval `ssh-agent`
+ssh-add ~/.ssh/altitudelabs.pem
+```
 
-* ./devops-core
-* ./devops-host
-* ./devops-var.yml
-
-So that your file structure will look like:
+1. Copy all files and folder under you project root folder, so that your file structure will look like:
 ```
 //Project foo
 .
@@ -33,7 +38,7 @@ localhost
 
 [launched]
 ```
-* Remark: If you are using different python interpreter, see FAQ
+* Remark: If you are using different python interpreter, see FAQ.
 
 3. Config `./devops-var.yml`
 ```
@@ -164,5 +169,8 @@ localhost ansible_python_interpreter=/Library/Frameworks/Python.framework/Versio
 #####  No handler was ready to authenticate
 1. `source ~/.bash_profile` before running `aws.yml`
 
-#####  Creating too many instances
+##### Creating too many instances
 1. Go to AWS, delete useless ec2 instance first.
+
+#### The authenticity of host can't be established. Are you sure you want to continue connecting (yes/no)?
+`yes`

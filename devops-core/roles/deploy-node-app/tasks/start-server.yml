@@ -10,7 +10,6 @@
     become_user: ubuntu
     shell: chdir=/home/ubuntu/{{ application_name }} {{ pm2_start_var }} pm2 start {{app_js}} --name "app"
     register: pm2start
-    failed_when: "'ERROR' in pm2start.stderr"
     ignore_errors: True
 
   - name: Start server <3/3> Print pm2 status
