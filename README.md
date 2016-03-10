@@ -67,26 +67,26 @@ Aims - Automatically do these:
 
 6. Go to you project root file, create ec2 instance using
     ```
-    ./devops aws
+    devops aws
     ```
     * If success, you may see nginx welcome page.
 
 7. Deploy
     ```
-    ./devops install
+    devops install
     ```
     * When process pause, Copy the public key. Go to your git repo, click [Settings] -> [Deploy Keys]. Add the public key as deploy key. Then press Enter in terminal to continue the process.
 
 
 8. Add subdomain
     ```
-    ./devops godaddy
+    devops godaddy
     ```
     * Type your Godaddy username and password when it asked. If this is success, you should see the site on the path as in `./devops-vars.yml` configurations
 
 9. Webhook Github
     ```
-    ./devops webhook
+    devops webhook
     ```
     * Then, go to your github repo, click [Settings] -> [Webhooks and Services] -> [Add webhook].
       * Payload URL url: `domain-name.com:autodeploy-port`, default port 8001.
@@ -134,12 +134,12 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 
 ##### Run all of them
   ```
-  ./devops
+  devops
   ```
 
 ##### Create EC2 instance and add to host file
   ```
-  ./devops aws
+  devops aws
   ```
   or
   ```
@@ -148,7 +148,7 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 
 ##### Provision EC2 instance and Deploy
   ```
-  ./devops install
+  devops install
   ```
   or
   ```
@@ -157,7 +157,7 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 
 ##### Add subdomain to GoDaddy ac
   ```
-  ./devops godaddy
+  devops godaddy
   ```
   or
   ```
@@ -166,7 +166,7 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 
 ##### Run python script to webhook Github
   ```
-  ./devops webhook
+  devops webhook
   ```
   or
   ```
