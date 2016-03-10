@@ -115,6 +115,8 @@ nginx_server_port:                      7777                      # Port number 
 git_path:                               altitudelabs/nodeJS_template  # Github repo
 git_branch:                             master                        # Github repo branch
 
+deploy_sh_file:                         deploy.sh
+
 app_js:                                 server.js                     # File to start the server
 bashrc_env_var: |                                                     # ENV variables for server
                                         PORT={{ nginx_server_port }}  
@@ -125,52 +127,51 @@ pm2_start_var:                          PORT={{ nginx_server_port }} NODE_ENV=pr
 ###### webhook.yml Setting ############################################################
 git_autodeploy_port:                    8001                          # Autodeploy port
 git_autodeploy_pull_shell:              sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull' # Autodeploy do these thing along with git pull
-git_autodeploy_deploy_shell:            npm install && pm2 restart app  # After git pull
-
+git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart app
 ```
 
 ## Commands
 
 Run all of them
-    ```
-    ./devops
-    ```
+```
+./devops
+```
 
 Create EC2 instance and add to host file
-    ```
-    ./devops aws
-    ```
-    or
-    ```
-    ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
-    ```
+```
+./devops aws
+```
+or
+```
+ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
+```
 
 Provision EC2 instance and Deploy
-    ```
-    ./devops install
-    ```
-    or
-    ```
-    ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
-    ```
+```
+./devops install
+```
+or
+```
+ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
+```
 
 Do subdomain to GoDaddy ac
-    ```
-    ./devops godaddy
-    ```
-    or
-    ```
-    ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
-    ```
+```
+./devops godaddy
+```
+or
+```
+ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
+```
 
 Run python script to webhook Github
-    ```
-    ./devops webhook
-    ```
-    or
-    ```
-    ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
-    ```
+```
+./devops webhook
+```
+or
+```
+ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
+```
 
 ## FAQ
 
