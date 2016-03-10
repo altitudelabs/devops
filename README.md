@@ -132,46 +132,46 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 
 ## Commands
 
-Run all of them
-```
-./devops
-```
+* Run all of them
+  ```
+  ./devops
+  ```
 
-Create EC2 instance and add to host file
-```
-./devops aws
-```
-or
-```
-ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
-```
+* Create EC2 instance and add to host file
+  ```
+  ./devops aws
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
+  ```
 
-Provision EC2 instance and Deploy
-```
-./devops install
-```
-or
-```
-ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
-```
+* Provision EC2 instance and Deploy
+  ```
+  ./devops install
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
+  ```
 
-Do subdomain to GoDaddy ac
-```
-./devops godaddy
-```
-or
-```
-ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
-```
+* Do subdomain to GoDaddy ac
+  ```
+  ./devops godaddy
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
+  ```
 
-Run python script to webhook Github
-```
-./devops webhook
-```
-or
-```
-ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
-```
+* Run python script to webhook Github
+  ```
+  ./devops webhook
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
+  ```
 
 ## FAQ
 
