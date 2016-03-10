@@ -132,12 +132,12 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 
 ## Commands
 
-* Run all of them
+##### Run all of them
   ```
   ./devops
   ```
 
-* Create EC2 instance and add to host file
+##### Create EC2 instance and add to host file
   ```
   ./devops aws
   ```
@@ -146,7 +146,7 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
   ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
   ```
 
-* Provision EC2 instance and Deploy
+##### Provision EC2 instance and Deploy
   ```
   ./devops install
   ```
@@ -155,7 +155,7 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
   ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
   ```
 
-* Do subdomain to GoDaddy ac
+##### Add subdomain to GoDaddy ac
   ```
   ./devops godaddy
   ```
@@ -164,7 +164,7 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
   ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
   ```
 
-* Run python script to webhook Github
+##### Run python script to webhook Github
   ```
   ./devops webhook
   ```
