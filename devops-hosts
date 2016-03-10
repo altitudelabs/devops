@@ -1,4 +1,5 @@
 [local]
-localhost
+localhost ansible_python_interpreter=/Library/Frameworks/Python.framework/Versions/2.7/bin/python
 
 [launched]
+52.77.253.136 ansible_ssh_private_key_file=~/.ssh/altitudelabs.pem

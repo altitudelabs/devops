@@ -2,5 +2,17 @@
   - include: nginx-conf.yml
   - include: add-github-key.yml
   - include: git-pull.yml
-  - include: install-depend.yml
+#  - include: install-depend.yml
+  - name: chmod Deploy script
+    sudo: yes
+    sudo_user: ubuntu
+    shell: chdir=/home/ubuntu/{{ application_name }}  sudo chmod u+x {{ deploy_sh_file }}
+    tags: run
+
+  - name: Run Deploy script
+    sudo: yes
+    sudo_user: ubuntu
+    shell: chdir=/home/ubuntu/{{ application_name }} sudo ./{{ deploy_sh_file }}
+    tags: run
+
   - include: start-server.yml

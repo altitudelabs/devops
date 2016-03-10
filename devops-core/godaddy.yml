@@ -20,3 +20,10 @@
 
     roles:
       - godaddy
+
+  - name: Open url in browser
+    hosts: local
+    connection: local
+    gather_facts: True
+    tasks:
+      - shell: open "http://{{ nginx_server_name }}"

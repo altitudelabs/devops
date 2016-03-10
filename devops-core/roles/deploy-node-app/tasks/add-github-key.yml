@@ -1,14 +1,22 @@
 ---
-  - name: Add Deploy Key <1/6> Add SSH private key
-    template: src=github_rsa
-              dest=/home/ubuntu/.ssh
-              backup=yes
+#  - name: Add Deploy Key <1/6> Add SSH private key
+#    template: src=github_rsa
+#              dest=/home/ubuntu/.ssh
+#              backup=yes
 
-  - name: Add Deploy Key <2/6> Add SSH public key
-    template: src=github_rsa.pub
-              dest=/home/ubuntu/.ssh
-              backup=yes
+#  - name: Add Deploy Key <2/6> Add SSH public key
+#    template: src=github_rsa.pub
+#              dest=/home/ubuntu/.ssh
+#              backup=yes
 
+  - stat: path=/home/ubuntu/.ssh/github_rsa
+    register: github_file
+
+  - name: Add Key
+    sudo: yes
+    sudo_user: ubuntu
+    command: ssh-keygen -t rsa -N '' -f /home/ubuntu/.ssh/github_rsa
+    when: github_file.stat.exists == false
 
   - name: Add Deploy Key <3/6> chmod ~/.ssh
     become: yes

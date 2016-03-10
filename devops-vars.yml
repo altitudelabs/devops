@@ -1,7 +1,8 @@
 ---
 application_name:     template                      # You repo will be install in this folder, NO-SPACE-ALLOWED
 instance_name:        template-staging              # Ec2 instance_name
+keypair:              altitudelabs                  # Key name to access the instance (from ~/.ssh/)
 nginx_server_name:    template.altitudelabs.com     # Godaddy will create this subdomain
 nginx_server_port:    7777                          # Port number to start the server
-git_path:             altitudelabs/nodeJS_template  # Github repo
+git_path:             altitudelabs/devops           # Github repo
 app_js:               server.js                     # File to start the server

@@ -13,7 +13,6 @@
       security_group: default
       image: ami-96f1c1c4
       region: ap-southeast-1
-      keypair: altitudelabs
     vars_files:
       - env_vars/base.yml
     tasks:
@@ -41,3 +40,10 @@
     roles:
       - common
       - nginx
+      
+  - name: Open url in browser
+    hosts: local
+    connection: local
+    gather_facts: True
+    tasks:
+      - shell: open "http://{{ hostvars[groups['launched'][0]]['inventory_hostname'] }}"
