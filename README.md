@@ -38,7 +38,7 @@ Aims - Automatically do these:
     export AWS_SECRET_KEY={{ aws_secret_key }}
     ```
 
-4. Copy all files and folder under you project root folder.
+4. Make sure there is nothing after `[launched]` in `devops-hosts` file. 
 
 5. Config `./devops-vars.yml`
 
