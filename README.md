@@ -40,7 +40,7 @@ Aims - Automatically do these:
 
 4. Copy all files and folder under you project root folder.
 
-5. Config `./devops-var.yml`
+5. Config `./devops-vars.yml`
 
 6. Go to you project root file, start deployment using
     ```

@@ -41,9 +41,3 @@
       - common
       - nginx
       
-  - name: Open url in browser
-    hosts: local
-    connection: local
-    gather_facts: True
-    tasks:
-      - shell: open "http://{{ hostvars[groups['launched'][0]]['inventory_hostname'] }}"
