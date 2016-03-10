@@ -10,7 +10,6 @@ Aims - Automatically do these:
 * Webhook Github
 
 ## Things you need
-* This repo
 * Github Project (You need Admin permission to access 'Setting' page )
 * deploy.sh in project root
 * AWS access key and secret key
@@ -19,37 +18,17 @@ Aims - Automatically do these:
 
 ## Getting Started - Mac OSX
 
-* Install ansible using `pip install ansible` if you have not.
-* ssh add private key if you have not.
+1. Install ansible using
+  ```
+  pip install ansible
+  ```
+2. ssh add private key if you have not.
     ```
     eval `ssh-agent`
     ssh-add ~/.ssh/altitudelabs.pem
     ```
 
-1. Copy all files and folder under you project root folder, so that your file structure will look like:
-    ```
-    //Project foo
-    .
-    +-- foo-assets
-    +-- foo-other-folder
-    +-- foo-server.js
-    +-- devops-core         // Playbooks and default config
-    +-- devops-hosts        // Host file for ec2 instances; from devops-core/devops-hosts.sample
-    +-- devops-vars.yml     // Configurations file
-    ```
-
-2. Check your `./devops-host` file, it should have nothing after `[launched]`
-    ```
-    [local]
-    localhost
-
-    [launched]
-    ```
-    * Remark: If you are using different python interpreter, see FAQ.
-
-3. Config `./devops-var.yml`
-
-4. Open terminal, add AWS access and secret key to `~/.bash_profile`
+3. Add AWS access and secret key to `~/.bash_profile`
     ```
     sudo vim ~/.bash_profile
     ```
@@ -59,42 +38,24 @@ Aims - Automatically do these:
     export AWS_SECRET_KEY={{ aws_secret_key }}
     ```
 
-5. Assign permission to shell script
-    ```
-    chmod u+x devops
+4. Copy all files and folder under you project root folder.
 
-    ```
+5. Config `./devops-var.yml`
 
-6. Go to you project root file, create ec2 instance using
+6. Go to you project root file, start deployment using
     ```
-    devops aws
+    devops
     ```
-    * If success, you may see nginx welcome page.
-
-7. Deploy
-    ```
-    devops install
-    ```
+    * If instanec created successfully, you may see nginx welcome page.
     * When process pause, Copy the public key. Go to your git repo, click [Settings] -> [Deploy Keys]. Add the public key as deploy key. Then press Enter in terminal to continue the process.
-
-
-8. Add subdomain
-    ```
-    devops godaddy
-    ```
     * Type your Godaddy username and password when it asked. If this is success, you should see the site on the path as in `./devops-vars.yml` configurations
-
-9. Webhook Github
-    ```
-    devops webhook
-    ```
-    * Then, go to your github repo, click [Settings] -> [Webhooks and Services] -> [Add webhook].
+    * After webhook url show up, go to your github repo, click [Settings] -> [Webhooks and Services] -> [Add webhook].
       * Payload URL url: `domain-name.com:autodeploy-port`, default port 8001.
       * Content type: `application/json`
       * `Just the push event`
       * `Active`
 
-10. You're done! Now, try push new commits to the branch, you should see the site updated automatically.
+7. You're done! Now, try push new commits to the branch, you should see the site updated automatically.
 
 
 ## Yml Config options
