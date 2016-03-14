@@ -38,7 +38,7 @@ Aims - Automatically do these:
     export AWS_SECRET_KEY={{ aws_secret_key }}
     ```
 
-4. Make sure there is nothing after `[launched]` in `devops-hosts` file. 
+4. Make sure there is nothing after `[launched]` in `devops-hosts` file.
 
 5. Config `./devops-vars.yml`
 
@@ -139,7 +139,7 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 #### When running aws.yml
 ##### boto required for this module
 Solutions
-1. Install boto using `sudo pip install boto`
+1. Install boto using `sudo pip install boto` or `sudo /usr/bin/python -m easy_install boto`
 2. If boto was installed, and you installed more than 1 python in your computer, try `which python`, copy the path to `./devops-host` like
 ```
 [local]
