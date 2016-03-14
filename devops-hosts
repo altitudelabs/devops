@@ -1,4 +1,4 @@
 [local]
-localhost ansible_python_interpreter=/Library/Frameworks/Python.framework/Versions/2.7/bin/python
+localhost
 
 [launched]

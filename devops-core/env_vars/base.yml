@@ -1,9 +1,11 @@
 ---
+host_file_path:                         ./devops-hosts
+
 application_name:                       template
-instance_name:                          template-staging
+instance_name:                          '{{ application_name }}-staging'
 keypair:                                altitudelabs
 
-nginx_server_name:                      template.altitudelabs.com
+nginx_server_name:                      '{{ application_name }}.altitudelabs.com'
 nginx_server_port:                      7777
 
 git_path:                               altitudelabs/nodeJS_template
