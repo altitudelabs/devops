@@ -6,6 +6,16 @@ then
   source ~/.bashrc
   source ~/.bash_profile
   ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
+elif [[ $1 == "aws-check-exists" ]]
+then
+  source ~/.bashrc
+  source ~/.bash_profile
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws-check-exists.yml
+elif [[ $1 == "aws-terminate" ]]
+then
+  source ~/.bashrc
+  source ~/.bash_profile
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws-terminate.yml
 elif [[ $1 == "install" ]]
 then
   ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml

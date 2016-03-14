@@ -1,0 +1,36 @@
+---
+- hosts: launched
+  gather_facts: True
+  user: ubuntu
+  sudo: True
+  tasks:
+    - ec2_facts:
+
+- hosts: launched
+  gather_facts: True
+  connection: local
+  vars:
+    region: ap-southeast-1
+  tasks:
+    - name: Destroy all instances
+      ec2:
+        state: 'absent'
+        region: '{{ region }}'
+        instance_ids: '{{ item }}'
+      with_items: hostvars[inventory_hostname]['ansible_ec2_instance_id']
+
+- name: Provision an EC2 node
+  hosts: local
+  connection: local
+  gather_facts: False
+  tags: provisioning
+  vars:
+    instance_type: t2.micro
+    security_group: default
+    image: ami-96f1c1c4
+    region: ap-southeast-1
+  vars_files:
+    - env_vars/base.yml
+  tasks:
+    - name: Add instance to local host file
+      local_action: lineinfile dest={{ host_file_path }} state=absent regexp="\w+\.\w+\.\w+\.\w+.*"
