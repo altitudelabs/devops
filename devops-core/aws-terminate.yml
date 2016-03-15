@@ -18,6 +18,13 @@
         region: '{{ region }}'
         instance_ids: '{{ item }}'
       with_items: hostvars[inventory_hostname]['ansible_ec2_instance_id']
+#      when: instance_ip is not defined
+#    - name: Destroy specfic instances
+#      ec2:
+#        state: 'absent'
+#        region: '{{ region }}'
+#        instance_ids: '{{ lookup("instance-id", instance_ip) }}'
+#      when: instance_ip is defined
 
 - name: Provision an EC2 node
   hosts: local
@@ -32,5 +39,6 @@
   vars_files:
     - env_vars/base.yml
   tasks:
-    - name: Add instance to local host file
+    - name: Remove instance from local host file
       local_action: lineinfile dest={{ host_file_path }} state=absent regexp="\w+\.\w+\.\w+\.\w+.*"
+#      when: instance_id is not defined
