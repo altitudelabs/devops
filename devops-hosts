@@ -2,4 +2,3 @@
 localhost
 
 [launched]
-54.179.164.64 ansible_ssh_private_key_file=~/.ssh/altitudelabs.pem
