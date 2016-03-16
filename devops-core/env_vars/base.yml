@@ -23,3 +23,20 @@ pm2_start_var:                          PORT={{ nginx_server_port }} NODE_ENV=pr
 git_autodeploy_port:                    8001
 git_autodeploy_pull_shell:              sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'
 git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart app
+vm_dependencies:
+  nodejs:
+    version: '5.8.0'
+  mongodb:
+    db_name: 'database'
+    db_group: 'group'
+    db_user:  'user'
+    db_password: 'password'
+
+  ruby:
+    version: '1.9.3'                                # Optional
+  mysql:
+    # root_password: 'pw1234567'                    # Optional
+    db_name:  'database'                            # Required, database name
+    db_user:  'user'                                # Required, user name
+    db_password: "password"                         # Required, user password
+    db_port: 3306                                   #
