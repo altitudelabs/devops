@@ -14,6 +14,18 @@
               dest=/home/ubuntu/
               backup=yes
               mode=u+x
+    with_items:
+      - "{{nginx_staging_server_name}}"
+    when: "'staging' in group_names"
+
+  - name: <3/6> Create the godaddy.py file
+    template: src=godaddy.py
+              dest=/home/ubuntu/
+              backup=yes
+              mode=u+x
+    with_items:
+      - "{{nginx_production_server_name}}"
+    when: "'production' in group_names"
 
   - name: <4/6> Execute godaddy.py
     become: yes
@@ -23,7 +35,7 @@
     ignore_errors: True
 
   - name: <5/6> Print result
-    debug: msg="success = {{ godaddy.stdout!="" }}, site = {{ nginx_server_name }}"
+    debug: var="godaddy"
 
   - name: <6/6> Delete godaddy.py
     file: path=/home/ubuntu/godaddy.py state=absent

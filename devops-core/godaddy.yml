@@ -25,5 +25,10 @@
     hosts: local
     connection: local
     gather_facts: True
+    vars_files:
+      - env_vars/base.yml
     tasks:
-      - shell: open "http://{{ nginx_server_name }}"
+      - shell: open "http://{{ item }}"
+        with_items:
+          - "{{nginx_staging_server_name}}"
+          - "{{nginx_production_server_name}}"
