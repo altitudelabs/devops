@@ -8,4 +8,8 @@
     shell: chdir=/home/ubuntu sudo chown -R ubuntu {{ application_name }}
 
   - name: Pull from GitHub <3/3> Get stuff from git
-    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ application_name }} accept_hostkey=yes version={{ git_branch }} key_file=/home/ubuntu/.ssh/github_rsa
+    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ application_name }} accept_hostkey=yes version={{ git_staging_branch }} key_file=/home/ubuntu/.ssh/github_rsa force=yes
+    when: "'staging' in group_names"
+  - name: Pull from GitHub <3/3> Get stuff from git
+    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ application_name }} accept_hostkey=yes version={{ git_production_branch }} key_file=/home/ubuntu/.ssh/github_rsa force=yes
+    when: "'production' in group_names"

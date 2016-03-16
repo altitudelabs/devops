@@ -24,12 +24,13 @@
 
   - name:  <5/5>  Print pm2 status
     debug: var=pm2status.stdout_lines
+    when: "'ERROR' not in pm2status.stderr"
 
   - name: <5/5> Print pm2 error
     debug: var=pm2status.stderr
     when: "'ERROR' in pm2status.stderr"
 
   - name: Please add the following url as Github webhook
-    debug: msg=http://{{ hostvars[groups['launched'][0]]['inventory_hostname'] }}:{{ git_autodeploy_port }}
+    debug: msg=http://{{ inventory_hostname }}:{{ git_autodeploy_port }}
 
   - pause: prompt="!!!Please add the above url as Github webhook!!!"

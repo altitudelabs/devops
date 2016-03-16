@@ -28,8 +28,5 @@ then
 else
   source ~/.bashrc
   source ~/.bash_profile
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/run-all.yml
 fi

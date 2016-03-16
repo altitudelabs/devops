@@ -21,17 +21,29 @@
           region: '{{ region }}'
           filters:
             instance-state-name: running
-            "tag:Name": '{{ instance_name }}'
+            "tag:Name": '{{ application_name }}'
         register: ec2_exist
 
-      - debug: msg={{ lookup('ip', item.public_dns_name) }}
+      - name: Print instance details
+        debug: var=item
+        with_items: ec2_exist.instances
+        when: "ec2_exist.instances != []"
+
+#      - name: Warning
+#        pause: prompt="Instances exists, Please press 'Ctrl + C' and press 'A' to terminate the process and update your project name. Otherwise, Press 'return' to use existing instance."
+#        when: "ec2_exist.instances != []"
+
+      - name: Find IP address by public DNS
+        debug: msg={{ lookup('ip', item.public_dns_name) }}
         with_items: ec2_exist.instances
         register: ec2_exist_ip_address
+        when: "ec2_exist.instances != []"
 
-      - name: Add ip address
-        include: add-ipaddress.yml ip_address:{{ item.msg }}
+      - name: Run IP address playbook
+        include: add-ipaddress.yml ip_address={{ item.msg }} itype={{ item.item.tags.Type }}
         with_items: ec2_exist_ip_address.results
         when: "ec2_exist.instances != []"
 
-      - debug: msg='Instance name - <{{ instance_name }}> is not exists.'
+      - name: No instance exists
+        debug: msg='Instance name - <{{ application_name }}> is not exists. Good to go!'
         when: "ec2_exist.instances == []"

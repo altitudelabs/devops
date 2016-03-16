@@ -7,4 +7,4 @@ password = sys.argv[2]
 client = GoDaddyClient()
 if client.login(username, password):
     print client.find_domains()
-    client.update_dns_record('{{ nginx_server_name }}', '{{ hostvars[groups['launched'][0]]['inventory_hostname'] }}')
+    client.update_dns_record('{{ item }}', '{{ inventory_hostname }}')
