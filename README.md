@@ -34,6 +34,7 @@ Aims - Automatically do these:
     ```
 
     ```
+    export ANSIBLE_HOST_KEY_CHECKING=False
     export AWS_ACCESS_KEY={{ aws_access_key }}
     export AWS_SECRET_KEY={{ aws_secret_key }}
     ```
