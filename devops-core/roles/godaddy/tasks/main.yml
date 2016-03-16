@@ -35,7 +35,7 @@
     ignore_errors: True
 
   - name: <5/6> Print result
-    debug: var="godaddy"
+    debug: msg="success = {{ godaddy.stdout!="" }}"
 
   - name: <6/6> Delete godaddy.py
     file: path=/home/ubuntu/godaddy.py state=absent
