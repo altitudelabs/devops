@@ -29,7 +29,7 @@
         register: ec2_exist_ip_address
 
       - name: Add ip address
-        include: add-ipaddress.yml ip_address:{{ item.msg }}
+        include: add-ipaddress.yml ip_address={{ item.msg }}
         with_items: ec2_exist_ip_address.results
         when: "ec2_exist.instances != []"
 
