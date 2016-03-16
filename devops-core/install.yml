@@ -14,7 +14,7 @@
       - { role: mysql, tags: ['mysql'], when: vm_dependencies.mysql is defined }
       - { role: pm2, tags: ['pm2'] }
 
-  - name: Deploy
+  - name: Deploy node app
     hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
     become: yes # On EC2 nodes, this is automatically passwordless.
     remote_user: ubuntu # This is the username for all ubuntu images, rather than root, or something weird.
