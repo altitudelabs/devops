@@ -8,11 +8,13 @@
       - env_vars/base.yml
     roles:
       - common
-      - nginx
-      - mongodb
-      - nodejs
+      # - install-vm-dependencies
+      - { role: nodejs, tags: ['nodejs'], when: vm_dependencies.nodejs is defined }
+      - { role: mongodb, tags: ['mongodb'], when: vm_dependencies.mongodb is defined }
+      - { role: mysql, tags: ['mysql'], when: vm_dependencies.mysql is defined }
       - { role: pm2, tags: ['pm2'] }
       - { role: deploy-node-app, tags: ['deploy'] }
+
   - name: Open url in browser
     hosts: local
     connection: local
