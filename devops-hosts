@@ -1,4 +1,10 @@
 [local]
 localhost
 
-[launched]
+[launched:children]
+staging
+production
+
+[staging]
+
+[production]

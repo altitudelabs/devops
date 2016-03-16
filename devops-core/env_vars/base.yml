@@ -2,7 +2,6 @@
 host_file_path:                         ./devops-hosts
 
 application_name:                       template
-instance_name:                          '{{ application_name }}-staging'
 keypair:                                altitudelabs
 
 nginx_server_name:                      '{{ application_name }}.altitudelabs.com'
