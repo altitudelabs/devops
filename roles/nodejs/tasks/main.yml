@@ -1,9 +1,0 @@
----
-  - name: Install nodejs
-    apt: pkg=nodejs state=installed
-  - name: Install node-dev
-    apt: pkg=nodejs-dev state=installed
-  - name: Install nodejs-legacy
-    apt: pkg=nodejs-legacy state=installed
-  - name: Install npm
-    apt: pkg=npm state=installed

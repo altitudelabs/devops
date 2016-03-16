@@ -1,0 +1,36 @@
+---
+  - name: <1/5> Create autodeploy directory under /home/ubuntu for {{ application_name }}
+    file: path=/home/ubuntu/autodeploy state=directory mode=755
+
+  - name: <2/5> Create the GitAutoDeploy file
+    template: src=GitAutoDeploy.py
+              dest=/home/ubuntu/autodeploy
+              backup=yes
+              mode=u+x
+
+  - name: <3/5> Create the GitAutoDeploy config file
+    template: src=GitAutoDeploy.conf.json
+              dest=/home/ubuntu/autodeploy
+              backup=yes
+              mode=u+x
+
+  - name: <4/5> Start GitAutoDeploy with pm2
+    sudo: yes
+    sudo_user: ubuntu
+    shell: chdir=/home/ubuntu/autodeploy pm2 start GitAutoDeploy.py --name "GitAutoDeploy"
+    register: pm2status
+    failed_when: "'ERROR' in pm2status.stderr"
+    ignore_errors: True
+
+  - name:  <5/5>  Print pm2 status
+    debug: var=pm2status.stdout_lines
+    when: "'ERROR' not in pm2status.stderr"
+
+  - name: <5/5> Print pm2 error
+    debug: var=pm2status.stderr
+    when: "'ERROR' in pm2status.stderr"
+
+  - name: Please add the following url as Github webhook
+    debug: msg=http://{{ inventory_hostname }}:{{ git_autodeploy_port }}
+
+  - pause: prompt="!!!Please add the above url as Github webhook!!!"

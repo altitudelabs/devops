@@ -1,0 +1,34 @@
+---
+  # Install mongodb from the 10gen repository
+  - name: Add the Apt-key for the 10gen repository
+    apt_key: id=7F0CEB10 url=http://docs.mongodb.org/10gen-gpg-key.asc
+
+  - name: Add the Apt-repository for 10gen
+    apt_repository: repo="deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" state=present update_cache=yes
+
+  - name: Install MongoDB package
+    apt: pkg=mongodb-10gen{{ '=' if vm_dependencies.mongodb.version is defined | bool else '' }}{{ vm_dependencies.mongodb.version if vm_dependencies.mongodb.version is defined | bool else '' }} force=yes
+
+  - name: Install MongoDB Packages and requirements (~3min)
+    apt: pkg={{ item }} state=installed force=yes
+    with_items:
+      - python-pymongo
+      - python-pymongo-ext
+      - python-bson
+      - python-bson-ext
+
+  # Configure user/group
+  - name: Setup group
+    user: name={{ vm_dependencies.mongodb.db_group }} state=present system=yes
+    tags: mongodb
+
+  - name: Setup user
+    user: name={{ vm_dependencies.mongodb.db_user }} group={{ vm_dependencies.mongodb.db_group }} createhome=no shell="/bin/false" comment="MongoDB Server" state=present
+    tags: mongodb
+
+  - name: Create the user for mongodb
+    mongodb_user: database={{ vm_dependencies.mongodb.db_name }} name={{ vm_dependencies.mongodb.db_user }} password='{{ vm_dependencies.mongodb.db_password }}' state=present
+    notify: Restart mongod
+    tags: mongodb
+
+...
