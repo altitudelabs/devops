@@ -7,3 +7,11 @@
     apt: pkg=nodejs-legacy state=installed
   - name: Install npm
     apt: pkg=npm state=installed
+  - name: Install nodejs version manager
+    npm: name=n global=yes
+  - name: Update nodejs version
+    register: result
+    shell: n {{ vm_dependencies.nodejs.version }}
+    when: vm_dependencies.nodejs.version is defined
+  - debug: var=result
+...
