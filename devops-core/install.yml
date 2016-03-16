@@ -13,6 +13,15 @@
       - { role: mongodb, tags: ['mongodb'], when: vm_dependencies.mongodb is defined }
       - { role: mysql, tags: ['mysql'], when: vm_dependencies.mysql is defined }
       - { role: pm2, tags: ['pm2'] }
+
+  - name: Deploy
+    hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
+    become: yes # On EC2 nodes, this is automatically passwordless.
+    remote_user: ubuntu # This is the username for all ubuntu images, rather than root, or something weird.
+    gather_facts: True  #We need to re-enable this, as we turned it off earlier.
+    vars_files:
+      - env_vars/base.yml
+    roles:
       - { role: deploy-node-app, tags: ['deploy'] }
 
   - name: Open url in browser
@@ -20,4 +29,5 @@
     connection: local
     gather_facts: True
     tasks:
-      - shell: open "http://{{ hostvars[groups['launched'][0]]['inventory_hostname'] }}"
+      - shell: open "http://{{ hostvars[item]['inventory_hostname'] }}"
+        with_items: groups['launched']
