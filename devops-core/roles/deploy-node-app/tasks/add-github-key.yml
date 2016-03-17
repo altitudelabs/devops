@@ -45,9 +45,5 @@
     become_user: ubuntu
     debug: var=ps.stdout_lines
 
-  - pause: prompt="!!! Please add the above public key as github repo Deloy key !!!, then press Enter"
-#  - name: ssh add key
-#    sudo: yes
-#    sudo_user: ubuntu
-#    shell: eval $(ssh-agent) && sudo ssh-add /home/ubuntu/.ssh/id_rsa
-#    tags: ssh
+  - name: Add deploy key to github repo
+    shell: curl -u '{{ github_username }}:{{ github_password }}' --data '{"title":"","key":"{{ ps.stdout_lines[0] }}"}' https://api.github.com/repos/{{ git_path }}/keys

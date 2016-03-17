@@ -21,13 +21,12 @@
     gather_facts: True  #We need to re-enable this, as we turned it off earlier.
     vars_files:
       - env_vars/base.yml
+    vars_prompt:
+      - name: "github_username"
+        prompt: "Enter your Github Username"
+        private: false
+      - name: "github_password"
+        prompt: "Enter your Github Password"
+        private: true
     roles:
       - { role: deploy-node-app, tags: ['deploy'] }
-
-  - name: Open url in browser
-    hosts: local
-    connection: local
-    gather_facts: True
-    tasks:
-      - shell: open "http://{{ hostvars[item]['inventory_hostname'] }}"
-        with_items: groups['launched']
