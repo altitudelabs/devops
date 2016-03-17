@@ -8,11 +8,10 @@
       - env_vars/base.yml
     roles:
       - common
-      # - install-vm-dependencies
       - { role: nodejs, tags: ['nodejs'], when: vm_dependencies.nodejs is defined }
       - { role: mongodb, tags: ['mongodb'], when: vm_dependencies.mongodb is defined }
       - { role: mysql, tags: ['mysql'], when: vm_dependencies.mysql is defined }
-      - { role: pm2, tags: ['pm2'] }
+      - { role: pm2, tags: ['pm2'], when: vm_dependencies.mysql is defined }
 
   - name: Deploy node app
     hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
