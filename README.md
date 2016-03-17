@@ -65,7 +65,7 @@ Aims - Automatically do these:
 #######################################################################################
 ###### Common Setting #################################################################
 
-application_name:                       template                  # You repo will be install in this folder, NO-SPACE-ALLOWED
+project_name:                       template                  # You repo will be install in this folder, NO-SPACE-ALLOWED
 instance_name:                          template-staging          # Ec2 instance_name
 keypair:                                altitudelabs              # Key name to access the instance (from ~/.ssh/)
 nginx_server_name:                      template.altitudelabs.com # Godaddy will create this subdomain
@@ -81,7 +81,7 @@ deploy_sh_file:                         deploy.sh
 
 app_js:                                 server.js                     # File to start the server
 bashrc_env_var: |                                                     # ENV variables for server
-                                        PORT={{ nginx_server_port }}  
+                                        PORT={{ nginx_server_port }}
                                         NODE_ENV=production
 pm2_start_var:                          PORT={{ nginx_server_port }} NODE_ENV=production # Variables for pm2
 

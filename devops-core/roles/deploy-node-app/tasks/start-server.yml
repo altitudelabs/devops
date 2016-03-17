@@ -8,7 +8,7 @@
   - name: Start server <2/3> Start process with pm2
     become: yes
     become_user: ubuntu
-    shell: chdir=/home/ubuntu/{{ application_name }} {{ pm2_start_var }} sudo pm2 start {{app_js}} --name "app"
+    shell: chdir=/home/ubuntu/{{ project_name }} {{ pm2_start_var }} sudo pm2 start {{app_js}} --name "app"
     register: pm2start
     ignore_errors: True
 
