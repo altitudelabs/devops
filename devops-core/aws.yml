@@ -25,12 +25,12 @@
         register: productionGroupisEmpty
 
       - name: Launch new Staging Instance
-        local_action: ec2 instance_tags="Name={{ application_name }},Type=staging" group={{ security_group }} instance_type={{ instance_type}} image={{ image }} wait=true region={{ region }} keypair={{ keypair }}
+        local_action: ec2 instance_tags="Name={{ project_name }},Type=staging" group={{ security_group }} instance_type={{ instance_type}} image={{ image }} wait=true region={{ region }} keypair={{ keypair }}
         register: ec2Staging
         when: stagingGroupisEmpty.msg
 
       - name: Launch new Production Instance
-        local_action: ec2 instance_tags="Name={{ application_name }},Type=production" group={{ security_group }} instance_type={{ instance_type}} image={{ image }} wait=true region={{ region }} keypair={{ keypair }}
+        local_action: ec2 instance_tags="Name={{ project_name }},Type=production" group={{ security_group }} instance_type={{ instance_type}} image={{ image }} wait=true region={{ region }} keypair={{ keypair }}
         register: ec2Production
         when: productionGroupisEmpty.msg
 

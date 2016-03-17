@@ -1,6 +1,6 @@
 server {
 	listen 80 default_server;
-	root /home/ubuntu/{{ application_name }};
+	root /home/ubuntu/{{ project_name }};
 	server_name {{ nginx_production_server_name }};
 	location / {
 		proxy_pass http://localhost:{{ nginx_server_port }};

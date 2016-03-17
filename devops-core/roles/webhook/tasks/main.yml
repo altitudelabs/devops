@@ -1,5 +1,5 @@
 ---
-  - name: <1/5> Create autodeploy directory under /home/ubuntu for {{ application_name }}
+  - name: <1/5> Create autodeploy directory under /home/ubuntu for {{ project_name }}
     file: path=/home/ubuntu/autodeploy state=directory mode=755
 
   - name: <2/5> Create the GitAutoDeploy file
