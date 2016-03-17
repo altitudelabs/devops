@@ -14,5 +14,7 @@
     sudo_user: ubuntu
     shell: chdir=/home/ubuntu/{{ project_name }} sudo ./{{ deploy_sh_file }}
     tags: run
+    register: run_deploy_script
+    failed_when: "'FAILED' in run_deploy_script.stderr"
 
   - include: start-server.yml
