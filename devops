@@ -1,0 +1,32 @@
+#!/bin/bash
+
+TASK="$1"
+if [[ $1 == "aws" ]]
+then
+  source ~/.bashrc
+  source ~/.bash_profile
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
+elif [[ $1 == "aws-check-exists" ]]
+then
+  source ~/.bashrc
+  source ~/.bash_profile
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws-check-exists.yml
+elif [[ $1 == "aws-terminate" ]]
+then
+  source ~/.bashrc
+  source ~/.bash_profile
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws-terminate.yml
+elif [[ $1 == "install" ]]
+then
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
+elif [[ $1 == "godaddy" ]]
+then
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
+elif [[ $1 == "webhook" ]]
+then
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
+else
+  source ~/.bashrc
+  source ~/.bash_profile
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/run-all.yml
+fi

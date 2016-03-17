@@ -1,0 +1,9 @@
+---
+# For more information about handlers see:
+# http://www.ansibleworks.com/docs/playbooks.html#handlers-running-operations-on-change
+#
+
+- name: restart pm2
+  become: yes
+  become_user: ubuntu
+  shell: sudo pm2 restart all 

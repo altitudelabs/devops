@@ -1,0 +1,20 @@
+---
+  - name: Lookup launched host
+    debug: msg={{ groups[itype] }}
+    register: launchedGroup
+
+  - name: ipaddress exists
+    debug: msg="{{ ip_address }} is already in hosts file"
+    when: "ip_address in launchedGroup.msg"
+
+  - name: Do you want to add the ipaddresses into host file?
+    pause: prompt="Instance <{{ project_name }}> ({{ itype }}) ({{ ip_address }}) already exists! Instances exists, Please press 'Ctrl + C' and press 'A' to terminate the process and update your project name. Otherwise, Press 'return' to use existing instance."
+    when: "ip_address not in launchedGroup.msg"
+
+  - name: Add instance to host group
+    add_host: name={{ ip_address }} groups={{ itype }} ansible_ssh_private_key_file=~/.ssh/{{ keypair }}.pem
+    when: "ip_address not in launchedGroup.msg"
+
+  - name: Add instance to host file
+    local_action: lineinfile dest="{{ host_file_path }}" regexp="{{ ip_address }}" insertafter="\[{{ itype }}\]" line="{{ ip_address }} ansible_ssh_private_key_file=~/.ssh/{{ keypair }}.pem"
+    when: "ip_address not in launchedGroup.msg"

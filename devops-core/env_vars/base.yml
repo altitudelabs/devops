@@ -1,0 +1,42 @@
+---
+host_file_path:                         ./devops-hosts
+
+project_name:                           template
+keypair:                                altitudelabs
+
+nginx_staging_server_name:              'staging.{{ project_name }}.altitudelabs.com'
+nginx_production_server_name:           '{{ project_name }}.altitudelabs.com'
+nginx_server_port:                      7777
+
+git_path:                               altitudelabs/nodeJS_template
+git_production_branch:                  master
+git_staging_branch:                     staging
+
+deploy_sh_file:                         deploy.sh
+
+app_js:                                 server.js
+bashrc_env_var: |
+                                        PORT={{ nginx_server_port }}
+                                        NODE_ENV=production
+pm2_start_var:                          PORT={{ nginx_server_port }} NODE_ENV=production
+
+git_autodeploy_port:                    8001
+git_autodeploy_pull_shell:              sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'
+git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart app
+vm_dependencies:
+  nodejs:
+    version: '5.8.0'
+  mongodb:
+    db_name: 'database'
+    db_group: 'group'
+    db_user:  'user'
+    db_password: 'password'
+
+  ruby:
+    version: '1.9.3'                                # Optional
+  mysql:
+    # root_password: 'pw1234567'                    # Optional
+    db_name:  'database'                            # Required, database name
+    db_user:  'user'                                # Required, user name
+    db_password: "password"                         # Required, user password
+    db_port: 3306                                   #

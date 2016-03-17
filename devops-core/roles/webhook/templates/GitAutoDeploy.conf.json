@@ -1,0 +1,10 @@
+{
+	"port": {{ git_autodeploy_port }},
+	"repositories":
+	[{
+		"url": "https://github.com/{{ git_path }}",
+		"path": "/home/ubuntu/{{ project_name }}",
+		"deploy": "{{ git_autodeploy_deploy_shell }}",
+		"pull": "{{ git_autodeploy_pull_shell }}"
+	}]
+}
