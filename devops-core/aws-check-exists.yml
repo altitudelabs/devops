@@ -21,7 +21,7 @@
           region: '{{ region }}'
           filters:
             instance-state-name: running
-            "tag:Name": '{{ application_name }}'
+            "tag:Name": '{{ project_name }}'
         register: ec2_exist
 
       - name: Print instance details
@@ -45,5 +45,5 @@
         when: "ec2_exist.instances != []"
 
       - name: No instance exists
-        debug: msg='Instance name - <{{ application_name }}> is not exists. Good to go!'
+        debug: msg='Instance name - <{{ project_name }}> is not exists. Good to go!'
         when: "ec2_exist.instances == []"

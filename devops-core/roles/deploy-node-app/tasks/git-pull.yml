@@ -1,15 +1,15 @@
 ---
-  - name: Pull from GitHub <1/3> Create directory under /home/ubuntu for {{ application_name }}
-    file: path=/home/ubuntu/{{ application_name }} state=directory mode=775
+  - name: Pull from GitHub <1/3> Create directory under /home/ubuntu for {{ project_name }}
+    file: path=/home/ubuntu/{{ project_name }} state=directory mode=775
 
   - name: Pull from GitHub <2/3> Set permission to folder
     become: yes
     become_user: ubuntu
-    shell: chdir=/home/ubuntu sudo chown -R ubuntu {{ application_name }}
+    shell: chdir=/home/ubuntu sudo chown -R ubuntu {{ project_name }}
 
   - name: Pull from GitHub <3/3> Get stuff from git
-    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ application_name }} accept_hostkey=yes version={{ git_staging_branch }} key_file=/home/ubuntu/.ssh/github_rsa force=yes
+    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ project_name }} accept_hostkey=yes version={{ git_staging_branch }} key_file=/home/ubuntu/.ssh/github_rsa force=yes
     when: "'staging' in group_names"
   - name: Pull from GitHub <3/3> Get stuff from git
-    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ application_name }} accept_hostkey=yes version={{ git_production_branch }} key_file=/home/ubuntu/.ssh/github_rsa force=yes
+    git: repo=ssh://git@github.com/{{ git_path }}.git dest=/home/ubuntu/{{ project_name }} accept_hostkey=yes version={{ git_production_branch }} key_file=/home/ubuntu/.ssh/github_rsa force=yes
     when: "'production' in group_names"

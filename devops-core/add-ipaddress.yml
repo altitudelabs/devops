@@ -8,7 +8,7 @@
     when: "ip_address in launchedGroup.msg"
 
   - name: Do you want to add the ipaddresses into host file?
-    pause: prompt="Instance <{{ application_name }}> ({{ itype }}) ({{ ip_address }}) already exists! Instances exists, Please press 'Ctrl + C' and press 'A' to terminate the process and update your project name. Otherwise, Press 'return' to use existing instance."
+    pause: prompt="Instance <{{ project_name }}> ({{ itype }}) ({{ ip_address }}) already exists! Instances exists, Please press 'Ctrl + C' and press 'A' to terminate the process and update your project name. Otherwise, Press 'return' to use existing instance."
     when: "ip_address not in launchedGroup.msg"
 
   - name: Add instance to host group
