@@ -1,7 +1,0 @@
----
-
-- name: Start mongod
-  service: name=mongodb state=started
-
-- name: Restart mongod
-  service: name=mongodb state=restarted

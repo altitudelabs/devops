@@ -1,0 +1,14 @@
+---
+  - name: Create directory under /home/ubuntu for fundity
+    file: path=/home/ubuntu/fundity state=directory mode=755
+
+  # - name: Git checkout from github
+  #   git: repo={{ git_repo }}
+  #        dest=/home/ubuntu/repos/{{ project_name }}/
+
+  - name: Copy post-receive web hook
+    copy: src=thingy.super.conf dest=/etc/supervisor/conf.d/thingy.conf
+
+  - name: Drop reverse proxy config for nginx
+    copy: src=fundity.nginx.conf dest=/etc/nginx/sites-enabled/fundity.conf
+    notify: restart nginx

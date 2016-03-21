@@ -1,0 +1,11 @@
+---
+  - name: Run deploy script
+    hosts: local
+    connection: local
+    gather_facts: false
+    vars:
+      deploy_script: /Users/justinyek/Sites/altitude/fundity
+      remote_repo: /home/ubuntu/fundity
+    tasks:
+      - name: Run deploy.sh
+        shell: bash {{ deploy_script }}/deploy.sh
