@@ -13,4 +13,5 @@
     register: result
     shell: n {{ vm_dependencies.nodejs.version }}
     when: vm_dependencies.nodejs.version is defined
+  - debug: var=result
 ...
