@@ -13,4 +13,8 @@
     register: result
     shell: n {{ vm_dependencies.nodejs.version }}
     when: vm_dependencies.nodejs.version is defined
+  - name: Install node global modules
+    npm: name={{ item }} global=yes
+    with_items: vm_dependencies.nodejs.global_dependencies
+    when: vm_dependencies.nodejs.global_dependencies is defined
 ...

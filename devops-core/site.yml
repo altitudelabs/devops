@@ -1,0 +1,11 @@
+---
+#   - name: site | Install site dependencies
+#     hosts: localhost
+#     vars_files:
+#       - env_vars/base.yml
+#     roles:
+#       - common
+#       - { role: nodejs, tags: ['nodejs'], when: vm_dependencies.nodejs is defined }
+#       # - { role: mongodb, tags: ['mongodb'], when: vm_dependencies.mongodb is defined }
+#       # - { role: mysql, tags: ['mysql'], when: vm_dependencies.mysql is defined }
+#       # - { role: pm2, tags: ['pm2'], when: vm_dependencies.pm2 is defined}

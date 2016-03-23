@@ -1,0 +1,16 @@
+# This playbook is to build docker image
+---
+  - name: docker | Build docker image
+    hosts: localhost
+    vars_files:
+      - env_vars/base.yml
+    tasks:
+      - name: docker | Install common dependencies
+        apt: pkg={{ item }} state=present
+        with_items:
+          - curl
+
+      # - name: docker | Install dependencies
+      #   include: site.yml
+      #   vars:
+      #     site_hosts: localhost
