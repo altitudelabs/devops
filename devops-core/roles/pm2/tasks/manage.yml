@@ -4,6 +4,8 @@
   command: >
     pm2 delete all
   ignore_errors: yes
+  register: command_result
+  failed_when: "'FAILED' in command_result.stderr"
 
 - name: Starting apps
   command: >
