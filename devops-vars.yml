@@ -23,4 +23,3 @@ vm_dependencies:
     db_user:  'user'                                # Required, user name
     db_password: "password"                         # Required, user password
     db_port: 3306                                   # Required, database port
-

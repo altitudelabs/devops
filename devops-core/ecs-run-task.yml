@@ -1,0 +1,43 @@
+# Creates new Ubuntu instance for Metisa
+
+---
+# Effectively lifted from the Ansible documentation on EC2:
+# http://docs.ansible.com/ec2_module.html
+  - name: ECS run task
+    hosts: local
+    connection: local
+    gather_facts: False
+    tags: provisioning
+    vars:
+      instance_type: t2.micro
+      security_group: default
+      image: ami-0cb0786f
+      region: ap-southeast-1
+      user_data: |
+        #!/bin/bash
+        echo ECS_CLUSTER={{ project_name }} >> /etc/ecs/ecs.config
+    vars_files:
+      - env_vars/base.yml
+    tasks:
+      - name: Create task definition
+        ecs_taskdefinition:
+          region: '{{ region }}'
+          containers:
+          - name: '{{ project_name }}'
+            cpu: 10
+            essential: true
+            memory: 300
+            image: ayame30/docker-whale:latest
+          family: '{{ project_name }}'
+          state: present
+        register: task_output
+      - debug: var=task_output
+      - name: Run task
+        ecs_task:
+          operation: run
+          cluster: '{{ project_name }}'
+          task_definition: '{{ project_name }}'
+          count: 1
+          started_by: ansible
+        register: y2
+      - debug: var=y2

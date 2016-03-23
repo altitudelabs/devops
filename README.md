@@ -141,7 +141,8 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart ap
 ##### boto required for this module
 Solutions
 1. Install boto using `sudo pip install boto` or `sudo /usr/bin/python -m easy_install boto`
-2. If boto was installed, and you installed more than 1 python in your computer, try `which python`, copy the path to `./devops-host` like
+2. Install boto3 using `sudo pip install boto3` or `sudo /usr/bin/python -m easy_install boto3`
+3. If boto was installed, and you installed more than 1 python in your computer, try `which python`, copy the path to `./devops-host` like
 ```
 [local]
 localhost ansible_python_interpreter=/Library/Frameworks/Python.framework/Versions/2.7/bin/python

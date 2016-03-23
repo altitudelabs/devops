@@ -25,6 +25,12 @@ then
 elif [[ $1 == "webhook" ]]
 then
   ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
+elif [[ $1 == "ecs" ]]
+then
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/ecs.yml
+elif [[ $1 == "ecs-run-task" ]]
+then
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/ecs-run-task.yml
 else
   source ~/.bashrc
   source ~/.bash_profile
