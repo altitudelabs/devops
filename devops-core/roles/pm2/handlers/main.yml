@@ -6,4 +6,6 @@
 - name: restart pm2
   become: yes
   become_user: ubuntu
-  shell: sudo pm2 restart all 
+  shell: sudo pm2 restart all
+  register: command_result
+  failed_when: "'FAILED' in command_result.stderr"
