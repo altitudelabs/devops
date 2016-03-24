@@ -8,22 +8,28 @@ Altitude Labs Devops
 ## <a name="development-flow"></a>Development flow
 
 #### Prerequisite
-1. Docker (check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) for how to install)
+*. Docker (check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) for how to install)
 
 #### Running your application with Docker
-1) Launch **Docker Quickstart Terminal**. You should see a welcome message in terminal.
+1) Run docker terminal (For Mac users only, skip to step2 if you are using Linux)
 
-![](https://cloud.githubusercontent.com/assets/5036163/13979800/d3e2e5fc-f115-11e5-9ff3-1777a81b1b06.png)
+Whenever you open a new terminal, before you can start using docker, type:
+    
+    $ eval $(docker-machine env)
 
-2) Go to your project directory. And create a file called `Dockerfile`. This file will be used to create a **docker image**
 
-![](https://cloud.githubusercontent.com/assets/5036163/13980060/3f2a60f0-f117-11e5-9f64-b5d6ffa90312.png)
-
-3) Make your `Dockerfile`. This file is to configure the docker image. You should set up the dependencies here. 
+2) Go to your project directory. 
+    
+And create a file called `Dockerfile`. This file is used to program your **docker image**
+   
+    $ touch Dockerfile
+    
+    
+3) Edit your `Dockerfile`. This file is to configure the docker image. You should set up the dependencies here. 
 
 For the syntax, you may refer to [Docker official site](https://docs.docker.com/engine/reference/builder/).
 
-_Example of_ `Dockerfile`
+_Example of_ `Dockerfile` for nodejs 
 
     # Latest Ubuntu LTS
     FROM ubuntu:14.04
@@ -43,47 +49,54 @@ _Example of_ `Dockerfile`
 
     # Network config
     EXPOSE 3000
+    
+4) Build your docker image with `Dockerfile` you have created, type
 
-    RUN mkdir /src
-    WORKDIR /src
+To build docker image, type:
 
-![](https://cloud.githubusercontent.com/assets/5036163/13980814/74b0cc1a-f11b-11e5-8b2e-6d5c3b96ab51.png)
+    $ docker build -t image_name [dir_of_folder_containing_dockerfile]
 
-4) Build your docker image with `Dockerfile` you have created.
-
-Type `$ docker build -t image_name .`
-
-`.` refers to the directory of folder containing `Dockerfile`.
-
-Type `$ docker images` to check the image you have created.
-
-In this example, you can see that there is in image called `image_name` in the repository.
-
-![](https://cloud.githubusercontent.com/assets/5036163/13981191/80ecbd5c-f11d-11e5-962a-ca5e62de614a.png)
 
 5) Run your server within docker container
 
-Type `$ docker run -v [repo_path]:/src -p [server_port_in_docker]:[server_port_in_local] [image_name] [cmd_to_start_server]`
+To run a docker container, type:
+   
+    $ docker run -v [local_mount_dir]:[docker_mount_dir] -p [docker_port]:[local_port] [image_name]
 
-![](https://cloud.githubusercontent.com/assets/5036163/13981535/9c7aaece-f11f-11e5-8aee-930c9f7ba2de.png)
+This command is to 
+* load image and start a docker container
+* mount to yours files to container (note that local_mount_dir has to be full path, you may use `-v $(pwd):[docker_mount_dir]` for current dir)
+* map port from container to localhost 
+* ssh into the container
 
-6) Do ssh tunnelling for docker container (For Mac users only, skip if you are using Linux)
+6) Start your service
 
-Launch another **Docker Quickstart Terminal** 
+You are now inside the docker container. Run your service. For example,
 
-And type `docker-machine ssh default -f -N -L [server_port_in_docker]:localhost:[server_port_in_local]`
+    $ cd /docker_mount_dir
+    $ gulp
+
+7) Do ssh tunnelling for docker container (For Mac users only, skip if you are using Linux)
+
+Create a new terminal, type
+    
+    $ eval $(docker-machine env)
+    $ docker-machine ssh default -f -N -L [docker_port]:localhost:[local_port]
 
 This allows you to access the docker container with `localhost`
 
-![](https://cloud.githubusercontent.com/assets/5036163/13981848/898fdc1a-f121-11e5-9252-288432fc4575.png)
+8) Create other services, if any, by repeating step 1 to step 6 
 
-7) Open your browser and go to the url on which the server is running.
+For example, [mongoDB](https://docs.docker.com/engine/examples/mongodb/)
+
+
+9) Open your browser and go to the url
+
+    http://localhost:[server_port]
 
 You should see the server is up and running.
 
-![](https://cloud.githubusercontent.com/assets/5036163/13981787/2bc968bc-f121-11e5-8f61-8aadcfaa6334.png) 
-
-8) You can then edit your project files as usual. 
+10) You can then edit your project files as usual and everything works as if you are running server locally.
 
 ## Commands for docker
 For useful docker commands, you may check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#cmd).
@@ -135,7 +148,7 @@ Aims - Automatically do these:
 
     
 #### Getting Started - Mac OSX
-1. Make sure there is nothing after `[launched]` in `devops-hosts` file.
+1. Make sure there is nothing after `[staging]` and `[production]` in `devops-hosts` file.
 
 2. Config `./devops-vars.yml`
 
@@ -144,23 +157,11 @@ Aims - Automatically do these:
 
     | variables       | descriptions              | default value|
     |-----------------|---------------------------|--------------|
-    |`host_file_path` | hosts file path           |./devops-hosts|
     |`project_name` | project name, NO-SPACE-ALLOWED|template|
     |`keypair` |Key name to access the instance|altitudelabs|
-    |`nginx_staging_server_name` |Subdomain name for staging|'staging.{{ project_name }}.altitudelabs.com'|
-    |`nginx_production_server_name` |Subdomain name for production |'{{ project_name }}.altitudelabs.com'|
     |`nginx_server_port` |Port number to start the server|7777|
     |`git_path` |Github repo, refer to http://github.com/{{ path }}|altitudelabs/nodeJS_template|
-    |`git_production_branch` |Branch for production|master|
-    |`git_staging_branch` |Branch for staging|staging|
-    |`deploy_sh_file` |deploy shell script file name which store in project root folder|deploy.sh|
     |`app_js` |file for server start|server.js|
-    |`bashrc_env_var` |environment variables|PORT={{ nginx_server_port }} NODE_ENV=production|
-    |`pm2_start_var`     |variables when start pm2|PORT={{ nginx_server_port }} NODE_ENV=production|
-    |`git_autodeploy_port` |port number for webhook|8001|
-    |`git_autodeploy_pull_shell` |script to git pull for webhook|sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'|
-    |`git_autodeploy_deploy_shell` |script to deploy for webhook|./{{ deploy_sh_file }} && pm2 restart app|
-    |`vm_dependencies` |dependencies' name and version|see below|
 
 
 3. Go to you project root file, start deployment using
@@ -168,7 +169,7 @@ Aims - Automatically do these:
     ./devops
     ```
     * Type your Github username and password when it asked.
-    * Type your Godaddy username and password when it asked. If this is success, you should see the site on the path as in `./devops-vars.yml` configurations
+    * Type your Godaddy username and password when it asked.
     * After webhook url show up, go to your github repo, click [Settings] -> [Webhooks and Services] -> [Add webhook].
       * Payload URL url: `domain-name.com:autodeploy-port`, default port 8001.
       * Content type: `application/json`
@@ -176,6 +177,29 @@ Aims - Automatically do these:
       * `Active`
 
 4. You're done! Now, try push new commits to the branch, you should see the site updated automatically.
+
+#### Yml Config Variables
+
+| variables       | descriptions              | default value|
+|-----------------|---------------------------|--------------|
+|`host_file_path` | hosts file path           |./devops-hosts|
+|`project_name` | project name, NO-SPACE-ALLOWED|template|
+|`keypair` |Key name to access the instance|altitudelabs|
+|`nginx_staging_server_name` |Subdomain name for staging|'staging.{{ project_name }}.altitudelabs.com'|
+|`nginx_production_server_name` |Subdomain name for production |'{{ project_name }}.altitudelabs.com'|
+|`nginx_server_port` |Port number to start the server|7777|
+|`git_path` |Github repo, refer to http://github.com/{{ path }}|altitudelabs/nodeJS_template|
+|`git_production_branch` |Branch for production|master|
+|`git_staging_branch` |Branch for staging|staging|
+|`deploy_sh_file` |deploy shell script file name which store in project root folder|deploy.sh|
+|`app_js` |file for server start|server.js|
+|`bashrc_env_var` |environment variables|PORT={{ nginx_server_port }} NODE_ENV=production|
+|`pm2_start_var`     |variables when start pm2|PORT={{ nginx_server_port }} NODE_ENV=production|
+|`git_autodeploy_port` |port number for webhook|8001|
+|`git_autodeploy_pull_shell` |script to git pull for webhook|sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'|
+|`git_autodeploy_deploy_shell` |script to deploy for webhook|./{{ deploy_sh_file }} && pm2 restart app|
+|`vm_dependencies` |dependencies' name and version|see below|
+
 
 #### Commands
 
@@ -228,6 +252,4 @@ Aims - Automatically do these:
   ```
   ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws-terminate.yml
   ```
-
-
 
