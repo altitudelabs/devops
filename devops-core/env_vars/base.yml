@@ -31,9 +31,6 @@ vm_dependencies:
     db_group: 'group'
     db_user:  'user'
     db_password: 'password'
-
-  ruby:
-    version: '1.9.3'                                # Optional
   mysql:
     # root_password: 'pw1234567'                    # Optional
     db_name:  'database'                            # Required, database name
