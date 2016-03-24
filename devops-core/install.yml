@@ -29,3 +29,12 @@
         private: true
     roles:
       - { role: deploy-node-app, tags: ['deploy'] }
+  - name: Open url in browser
+    hosts: local
+    connection: local
+    gather_facts: True
+    vars_files:
+      - env_vars/base.yml
+    tasks:
+      - shell: open "http://{{ hostvars[item]['inventory_hostname'] }}"
+        with_items: groups['launched']

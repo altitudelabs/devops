@@ -22,7 +22,7 @@ pm2_start_var:                          PORT={{ nginx_server_port }} NODE_ENV=pr
 
 git_autodeploy_port:                    8001
 git_autodeploy_pull_shell:              sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'
-git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && pm2 restart app
+git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && sudo pm2 restart app
 vm_dependencies:
   nodejs:
     version: '5.8.0'

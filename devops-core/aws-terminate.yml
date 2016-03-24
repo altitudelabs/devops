@@ -32,19 +32,19 @@
       become_user: ubuntu
       shell: sudo pip install httplib2
 
-    - name: Get Github key list
-      uri:
-        url: "https://api.github.com/repos/{{ git_path }}/keys"
-        method: GET
-        force_basic_auth: yes
-        user: "{{ github_username }}"
-        password: "{{ github_password }}"
-      register: key_list
+#    - name: Get Github key list
+#      uri:
+#        url: "https://api.github.com/repos/{{ git_path }}/keys"
+#        method: GET
+#        force_basic_auth: yes
+#        user: "{{ github_username }}"
+#        password: "{{ github_password }}"
+#      register: key_list
 
-    - debug: var=instance_key
+#    - debug: var=instance_key
 
-    - include: remove-github-key.yml id={{ item.id }} key={{ item.key }}
-      with_items: key_list.json
+#    - include: remove-github-key.yml id={{ item.id }} key={{ item.key }}
+#      with_items: key_list.json
 
 - hosts: launched
   gather_facts: True
@@ -52,7 +52,7 @@
   sudo: True
   tasks:
     - ec2_facts:
-      
+
 - hosts: launched
   gather_facts: True
   connection: local

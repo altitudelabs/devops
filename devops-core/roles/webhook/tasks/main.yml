@@ -17,7 +17,7 @@
   - name: <4/5> Start GitAutoDeploy with pm2
     sudo: yes
     sudo_user: ubuntu
-    shell: chdir=/home/ubuntu/autodeploy pm2 start GitAutoDeploy.py --name "GitAutoDeploy"
+    shell: chdir=/home/ubuntu/autodeploy sudo pm2 start GitAutoDeploy.py --name "GitAutoDeploy"
     register: pm2status
     failed_when: "'ERROR' in pm2status.stderr"
     ignore_errors: True
@@ -30,7 +30,12 @@
     debug: var=pm2status.stderr
     when: "'ERROR' in pm2status.stderr"
 
-  - name: Please add the following url as Github webhook
+  - name: Please add the following url as production Github webhook
     debug: msg=http://{{ inventory_hostname }}:{{ git_autodeploy_port }}
+    when: "'production' in group_names"
+
+  - name: Please add the following url as staging Github webhook
+    debug: msg=http://{{ inventory_hostname }}:{{ git_autodeploy_port }}
+    when: "'staging' in group_names"
 
   - pause: prompt="!!!Please add the above url as Github webhook!!!"

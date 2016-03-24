@@ -6,7 +6,7 @@
   - name: chmod Deploy script
     sudo: yes
     sudo_user: ubuntu
-    shell: chdir=/home/ubuntu/{{ project_name }}  sudo chmod u+x {{ deploy_sh_file }}
+    shell: chdir=/home/ubuntu/{{ project_name }} sudo chmod u+x {{ deploy_sh_file }}
     tags: run
 
   - name: Run Deploy script
