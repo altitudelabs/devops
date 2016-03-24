@@ -8,7 +8,7 @@ Altitude Labs Devops
 ## <a name="development-flow"></a>Development flow
 
 #### Prerequisite
-1. Docker (check [here](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) on how to install)
+1. Docker (check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) for how to install)
 
 #### Running your application with Docker
 1) Launch **Docker Quickstart Terminal**. You should see a welcome message in terminal.
@@ -85,7 +85,8 @@ You should see the server is up and running.
 
 8) You can then edit your project files as usual. 
 
-   For useful docker commands, you may check [here](https://github.com/altitudelabs/devops/wiki/Docker/_edit#cmd).
+## Commands for docker
+For useful docker commands, you may check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#cmd).
    
 ## <a name="deployment-flow"></a>Deployment flow
 
@@ -103,7 +104,6 @@ Aims - Automatically do these:
 * AWS access key and secret key
 * Key pair for EC2 instance, for example, altitudelabs.pem
 * Godaddy username and password
-* Docker (see [_wiki_](https://github.com/altitudelabs/devops/wiki/Docker/_edit#install-on-mac))
 
 
 #### Preparation
