@@ -8,25 +8,21 @@ Altitude Labs Devops
 ## <a name="development-flow"></a>Development flow
 
 #### Prerequisite
-1. Docker (check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) for how to install)
+*. Docker (check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) for how to install)
 
 #### Running your application with Docker
 1) Run docker terminal (For Mac users only, skip to step2 if you are using Linux)
 
 Whenever you open a new terminal, before you can start using docker, type:
     
-    ```
     $ eval $(docker-machine env)
-    ```
 
 
 2) Go to your project directory. 
     
 And create a file called `Dockerfile`. This file is used to program your **docker image**
    
-    ```
-    $ touch Dockerfile
-    ```
+        $ touch Dockerfile
     
     
 3) Edit your `Dockerfile`. This file is to configure the docker image. You should set up the dependencies here. 
@@ -58,17 +54,14 @@ _Example of_ `Dockerfile` for nodejs
 
 To build docker image, type:
 
-    ```
     $ docker build -t image_name [dir_of_folder_containing_dockerfile]
-    ```
+
 
 5) Run your server within docker container
 
 To run a docker container, type:
    
-    ```
     $ docker run -v [local_mount_dir]:[docker_mount_dir] -p [docker_port]:[local_port] [image_name]
-    ```
 
 This command is to 
 * load image and start a docker container
@@ -80,36 +73,30 @@ This command is to
 
 You are now inside the docker container. Run your service. For example,
 
-    ```
     $ cd /docker_mount_dir
     $ gulp
-    ```
 
-6) Do ssh tunnelling for docker container (For Mac users only, skip if you are using Linux)
+7) Do ssh tunnelling for docker container (For Mac users only, skip if you are using Linux)
 
 Create a new terminal, type
     
-    ```
     $ eval $(docker-machine env)
     $ docker-machine ssh default -f -N -L [docker_port]:localhost:[local_port]
-    ```
 
 This allows you to access the docker container with `localhost`
 
-7) Create other services, if any, by repeating step 1 to step 6 
+8) Create other services, if any, by repeating step 1 to step 6 
 
 For example, [mongoDB](https://docs.docker.com/engine/examples/mongodb/)
 
 
-8) Open your browser and go to the url
+9) Open your browser and go to the url
 
-    ```
     http://localhost:[server_port]
-    ```
 
 You should see the server is up and running.
 
-9) You can then edit your project files as usual and everything works as if you are running server locally.
+10) You can then edit your project files as usual and everything works as if you are running server locally.
 
 ## Commands for docker
 For useful docker commands, you may check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#cmd).
