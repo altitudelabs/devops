@@ -140,7 +140,7 @@ Aims - Automatically do these:
 2. Config `./devops-vars.yml`
 
 
-    ## Yml Config options
+    Yml Config options
 
     | variables       | descriptions              | default value|
     |-----------------|---------------------------|--------------|
@@ -155,8 +155,7 @@ Aims - Automatically do these:
     |`git_staging_branch` |Branch for staging|staging|
     |`deploy_sh_file` |deploy shell script file name which store in project root folder|deploy.sh|
     |`app_js` |file for server start|server.js|
-    |`bashrc_env_var` |environment variables|PORT={{ nginx_server_port }}|
-    |                   |             |        NODE_ENV=production|
+    |`bashrc_env_var` |environment variables|PORT={{ nginx_server_port }} NODE_ENV=production|
     |`pm2_start_var`     |variables when start pm2|PORT={{ nginx_server_port }} NODE_ENV=production|
     |`git_autodeploy_port` |port number for webhook|8001|
     |`git_autodeploy_pull_shell` |script to git pull for webhook|sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'|
