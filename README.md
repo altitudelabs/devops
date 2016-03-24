@@ -8,7 +8,7 @@ Altitude Labs Devops
 ## <a name="development-flow"></a>Development flow
 
 #### Prerequisite
-1. Docker (check [here](https://github.com/altitudelabs/devops/wiki/Docker/_edit#install-on-mac) on how to install)
+1. Docker (check [here](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) on how to install)
 
 #### Running your application with Docker
 1) Launch **Docker Quickstart Terminal**. You should see a welcome message in terminal.
