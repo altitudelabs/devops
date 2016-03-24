@@ -139,6 +139,31 @@ Aims - Automatically do these:
 
 2. Config `./devops-vars.yml`
 
+
+    ## Yml Config options
+
+    | variables       | descriptions              | default value|
+    |-----------------|---------------------------|--------------|
+    |`host_file_path` | hosts file path           |./devops-hosts|
+    |`project_name` | project name, NO-SPACE-ALLOWED|template|
+    |`keypair` |Key name to access the instance|altitudelabs|
+    |`nginx_staging_server_name` |Subdomain name for staging|'staging.{{ project_name }}.altitudelabs.com'|
+    |`nginx_production_server_name` |Subdomain name for production |'{{ project_name }}.altitudelabs.com'|
+    |`nginx_server_port` |Port number to start the server|7777|
+    |`git_path` |Github repo, refer to http://github.com/{{ path }}|altitudelabs/nodeJS_template|
+    |`git_production_branch` |Branch for production|master|
+    |`git_staging_branch` |Branch for staging|staging|
+    |`deploy_sh_file` |deploy shell script file name which store in project root folder|deploy.sh|
+    |`app_js` |file for server start|server.js|
+    |`bashrc_env_var` |environment variables|PORT={{ nginx_server_port }}|
+    |                   |             |        NODE_ENV=production|
+    |`pm2_start_var`     |variables when start pm2|PORT={{ nginx_server_port }} NODE_ENV=production|
+    |`git_autodeploy_port` |port number for webhook|8001|
+    |`git_autodeploy_pull_shell` |script to git pull for webhook|sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'|
+    |`git_autodeploy_deploy_shell` |script to deploy for webhook|./{{ deploy_sh_file }} && pm2 restart app|
+    |`vm_dependencies` |dependencies' name and version|see below|
+
+
 3. Go to you project root file, start deployment using
     ```
     ./devops
@@ -153,6 +178,57 @@ Aims - Automatically do these:
 
 4. You're done! Now, try push new commits to the branch, you should see the site updated automatically.
 
-See Wiki page for more details.
+#### Commands
+
+###### Run all of them
+  ```
+  devops
+  ```
+
+###### Create EC2 instance and add to host file
+  ```
+  devops aws
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
+  ```
+
+###### Provision EC2 instance and Deploy
+  ```
+  devops install
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
+  ```
+
+###### Add subdomain to GoDaddy ac
+  ```
+  devops godaddy
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
+  ```
+
+###### Run python script to webhook Github
+  ```
+  devops webhook
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
+  ```
+
+###### Terminate EC2 instance and remove from host file
+  ```
+  devops aws-terminate
+  ```
+  or
+  ```
+  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws-terminate.yml
+  ```
+
 
 
