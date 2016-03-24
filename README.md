@@ -15,14 +15,18 @@ Altitude Labs Devops
 
 Whenever you open a new terminal, before you can start using docker, type:
     
-`$ eval $(docker-machine env)`
+    ```
+    $ eval $(docker-machine env)
+    ```
 
 
 2) Go to your project directory. 
     
 And create a file called `Dockerfile`. This file is used to program your **docker image**
    
-`$ touch Dockerfile`
+    ```
+    $ touch Dockerfile
+    ```
     
     
 3) Edit your `Dockerfile`. This file is to configure the docker image. You should set up the dependencies here. 
@@ -54,13 +58,17 @@ _Example of_ `Dockerfile` for nodejs
 
 To build docker image, type:
 
-`$ docker build -t image_name [dir_of_folder_containing_dockerfile]`
+    ```
+    $ docker build -t image_name [dir_of_folder_containing_dockerfile]
+    ```
 
 5) Run your server within docker container
 
 To run a docker container, type:
    
-`$ docker run -v [local_mount_dir]:[docker_mount_dir] -p [docker_port]:[local_port] [image_name]`
+    ```
+    $ docker run -v [local_mount_dir]:[docker_mount_dir] -p [docker_port]:[local_port] [image_name]
+    ```
 
 This command is to 
 * load image and start a docker container
@@ -72,19 +80,19 @@ This command is to
 
 You are now inside the docker container. Run your service. For example,
 
-```
-$ cd /docker_mount_dir
-$ gulp
-```
+    ```
+    $ cd /docker_mount_dir
+    $ gulp
+    ```
 
 6) Do ssh tunnelling for docker container (For Mac users only, skip if you are using Linux)
 
 Create a new terminal, type
-
-```
-$ eval $(docker-machine env)
-$ docker-machine ssh default -f -N -L [docker_port]:localhost:[local_port]
-```
+    
+    ```
+    $ eval $(docker-machine env)
+    $ docker-machine ssh default -f -N -L [docker_port]:localhost:[local_port]
+    ```
 
 This allows you to access the docker container with `localhost`
 
@@ -95,7 +103,9 @@ For example, [mongoDB](https://docs.docker.com/engine/examples/mongodb/)
 
 8) Open your browser and go to the url
 
-`http://localhost:[server_port]`
+    ```
+    http://localhost:[server_port]
+    ```
 
 You should see the server is up and running.
 
@@ -172,7 +182,7 @@ Aims - Automatically do these:
     ./devops
     ```
     * Type your Github username and password when it asked.
-    * Type your Godaddy username and password when it asked. If this is success, you should see the site on the path as in `./devops-vars.yml` configurations
+    * Type your Godaddy username and password when it asked.
     * After webhook url show up, go to your github repo, click [Settings] -> [Webhooks and Services] -> [Add webhook].
       * Payload URL url: `domain-name.com:autodeploy-port`, default port 8001.
       * Content type: `application/json`
