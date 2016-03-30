@@ -1,0 +1,13 @@
+server {
+	listen 80 default_server;
+	root /home/ubuntu/{{ project_name }};
+	server_name {{ nginx_staging_server_name }};
+	location / {
+		proxy_pass http://localhost:{{ nginx_server_port }};
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+		include /etc/nginx/proxy_params;
+	}
+}

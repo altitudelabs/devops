@@ -1,0 +1,5 @@
+---
+  - include: nginx-conf.yml
+  - include: add-github-key.yml
+  - include: git-pull.yml
+  - include: docker.yml

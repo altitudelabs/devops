@@ -1,9 +1,11 @@
 ---
-project_name:         template                      # You repo will be install in this folder, NO-SPACE-ALLOWED
+project_name:         templates                      # You repo will be install in this folder, NO-SPACE-ALLOWED
 keypair:              altitudelabs                  # Key name to access the instance (from ~/.ssh/)
 nginx_server_port:    7777                          # Port number to start the server
-git_path:             altitudelabs/nodeJS_template  # Github repo
-app_js:               server.js                     # File to start the server
+git_path:             ayame30/IOTAL  # Github repo
+app_js:               server/app.js                     # File to start the server
+git_staging_branch:   master
+deploy_sh_file:       run-docker.sh
 vm_dependencies:
   nodejs:
     version: '5.8.0'
@@ -23,4 +25,3 @@ vm_dependencies:
     db_user:  'user'                                # Required, user name
     db_password: "password"                         # Required, user password
     db_port: 3306                                   # Required, database port
-
