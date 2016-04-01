@@ -8,7 +8,7 @@
       - env_vars/base.yml
     roles:
       - nginx
-
+      - pm2
   - name: Deploy node app
     hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
     become: yes # On EC2 nodes, this is automatically passwordless.

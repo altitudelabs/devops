@@ -9,13 +9,9 @@
     become: yes
     become_user: ubuntu
     shell: sudo pip install docker-py
-  - name: application service
-    docker:
-      docker_api_version: 1.18
-      name: mongodb
-      image: mongo
-      state: started
   - name: chmod run-docker script
     shell: chdir=/home/ubuntu/{{ project_name }} sudo chmod u+x {{ deploy_sh_file }}
   - name: bash run-docker script
     shell: chdir=/home/ubuntu/{{ project_name }} sudo bash {{ deploy_sh_file }}
+    register: command_result
+    failed_when: "'FAILED' in command_result.stderr"

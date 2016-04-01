@@ -14,6 +14,7 @@
         prompt: "Enter your Github Password"
         private: true
     roles:
+      - pm2
       - docker
       - deploy-docker
   - name: Open url in browser
