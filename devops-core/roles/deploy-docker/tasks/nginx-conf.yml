@@ -1,0 +1,17 @@
+---
+  - name: Nginx Config <1/2> Create the Nginx configuration file without SSL
+    template: src=nginx_site_staging_config.j2
+              dest=/etc/nginx/sites-enabled/{{ project_name }}
+              backup=yes
+    notify: reload nginx
+    when: (nginx_with_ssl is undefined or nginx_with_ssl == false ) and ('staging' in group_names)
+  - name: Nginx Config <1/2> Create the Nginx configuration file without SSL
+    template: src=nginx_site_production_config.j2
+              dest=/etc/nginx/sites-enabled/{{ project_name }}
+              backup=yes
+    notify: reload nginx
+    when: (nginx_with_ssl is undefined or nginx_with_ssl == false ) and ('production' in group_names)
+  - name: Nginx Config <2/2> Restart Nginx
+    become: yes
+    become_user: ubuntu
+    shell: sudo service nginx restart

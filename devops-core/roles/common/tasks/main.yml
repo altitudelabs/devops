@@ -45,6 +45,12 @@
     copy: src=insecure_sudoers dest=/etc/sudoers mode=440 owner=root group=root
     when: ansible_ec2_profile is not defined
 
+  - name: Add create_swap.sh
+    copy: src=create_swap.sh dest=/create_swap.sh owner=root group=root mode=644
+
+  - name: Run create_swap.sh
+    shell: sudo bash /create_swap.sh
+
 # The rest of this file is really about configuring commonly used packages, useful stuff and so on.
 
 # There's two ways to call the apt module.  You can do it like this, specifying one package, and its state (installed, absent) etc.
