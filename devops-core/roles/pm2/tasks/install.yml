@@ -1,13 +1,4 @@
 ---
-- name: Make sure nodejs is present
-  apt: pkg=nodejs state=present
-
-- name: Make sure nodejs-legacy is present
-  apt: pkg=nodejs-legacy state=present
-
-- name: Make sure npm is present
-  apt: name=npm state=present
-
 - name: Install packages
   npm:
     name: pm2

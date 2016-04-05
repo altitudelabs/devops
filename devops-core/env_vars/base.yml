@@ -14,7 +14,6 @@ git_staging_branch:                     staging
 
 deploy_sh_file:                         deploy.sh
 
-app_js:                                 server.js
 bashrc_env_var: |
                                         PORT={{ nginx_server_port }}
                                         NODE_ENV=production
