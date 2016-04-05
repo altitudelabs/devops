@@ -6,17 +6,9 @@
   - name: Install nodejs-legacy
     apt: pkg=nodejs-legacy state=installed
   - name: Install npm
-    apt: pkg=npm state=installed
-  - name: Install nodejs version manager
-    npm: name=n global=yes
-  - name: Update nodejs version
-    register: result
-    shell: n {{ vm_dependencies.nodejs.version }}
-    when: vm_dependencies.nodejs.version is defined
-  - name: Install node global modules
-    npm: name={{ item }} global=yes
-    with_items: "{{ vm_dependencies.nodejs.global_dependencies }}"
-    when: vm_dependencies.nodejs.global_dependencies is defined
-
-
+    apt: pkg=npm state=latest
+  - name: Update npm
+    shell: sudo npm install -g npm
+    become: ubuntu
+    become_user: yes
 ...
