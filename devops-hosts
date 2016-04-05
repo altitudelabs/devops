@@ -6,7 +6,5 @@ staging
 production
 
 [staging]
-54.255.201.203 ansible_ssh_private_key_file=~/.ssh/altitudelabs.pem
 
 [production]
-54.254.204.153 ansible_ssh_private_key_file=~/.ssh/altitudelabs.pem
