@@ -1,0 +1,16 @@
+---
+project_name:         altitudelabs                      # You repo will be install in this folder, NO-SPACE-ALLOWED
+keypair:              altitudelabs                  # Key name to access the instance (from ~/.ssh/)
+nginx_server_port:    3000                          # Port number to start the server
+git_path:             altitudelabs/Booqed  # Github repo
+git_production_branch:   master
+git_staging_branch:   staging
+app_js:               server/app.js
+deploy_sh_file:       deploy.sh
+vm_dependencies:
+  nodejs:
+    version: '4.4.1'
+    npm:
+      - gulp
+      - bower
+  mongodb:

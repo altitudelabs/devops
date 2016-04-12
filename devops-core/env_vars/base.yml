@@ -11,7 +11,7 @@ nginx_server_port:                      7777
 git_path:                               altitudelabs/nodeJS_template
 git_production_branch:                  master
 git_staging_branch:                     staging
-
+app_js:                                 app.js
 deploy_sh_file:                         deploy.sh
 
 bashrc_env_var: |
@@ -25,6 +25,9 @@ git_autodeploy_deploy_shell:            ./{{ deploy_sh_file }} && sudo pm2 resta
 vm_dependencies:
   nodejs:
     version: '5.8.0'
+    npm:
+      - gulp
+      - bower
   mongodb:
     db_name: 'database'
     db_group: 'group'

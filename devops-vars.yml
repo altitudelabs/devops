@@ -1,7 +1,0 @@
----
-project_name:         Booqed                      # You repo will be install in this folder, NO-SPACE-ALLOWED
-keypair:              altitudelabs                  # Key name to access the instance (from ~/.ssh/)
-nginx_server_port:    3000                          # Port number to start the server
-git_path:             altitudelabs/IOTAL  # Github repo
-git_staging_branch:   staging
-deploy_sh_file:       run-docker.sh

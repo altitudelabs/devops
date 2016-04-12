@@ -2,5 +2,5 @@
   - include: aws-check-exists.yml
   - include: aws.yml
   - include: install.yml
+  - include: deploy.yml
   - include: godaddy.yml
-  - include: webhook.yml

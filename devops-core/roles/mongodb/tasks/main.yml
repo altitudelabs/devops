@@ -18,17 +18,17 @@
       - python-bson-ext
 
   # Configure user/group
-  - name: Setup group
-    user: name={{ vm_dependencies.mongodb.db_group }} state=present system=yes
-    tags: mongodb
-
-  - name: Setup user
-    user: name={{ vm_dependencies.mongodb.db_user }} group={{ vm_dependencies.mongodb.db_group }} createhome=no shell="/bin/false" comment="MongoDB Server" state=present
-    tags: mongodb
-
-  - name: Create the user for mongodb
-    mongodb_user: database={{ vm_dependencies.mongodb.db_name }} name={{ vm_dependencies.mongodb.db_user }} password='{{ vm_dependencies.mongodb.db_password }}' state=present
-    notify: Restart mongod
-    tags: mongodb
+  # - name: Setup group
+  #   user: name={{ vm_dependencies.mongodb.db_group }} state=present system=yes
+  #   tags: mongodb
+  #
+  # - name: Setup user
+  #   user: name={{ vm_dependencies.mongodb.db_user }} group={{ vm_dependencies.mongodb.db_group }} createhome=no shell="/bin/false" comment="MongoDB Server" state=present
+  #   tags: mongodb
+  #
+  # - name: Create the user for mongodb
+  #   mongodb_user: database={{ vm_dependencies.mongodb.db_name }} name={{ vm_dependencies.mongodb.db_user }} password='{{ vm_dependencies.mongodb.db_password }}' state=present
+  #   notify: Restart mongod
+  #   tags: mongodb
 
 ...

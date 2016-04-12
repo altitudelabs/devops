@@ -2,105 +2,8 @@ Altitude Labs Devops
 ===
 
 ## Table of content
-1. [Development flow](#development-flow)
-2. [Deployment flow](#deployment-flow)
+1. [Deployment flow](#deployment-flow)
 
-## <a name="development-flow"></a>Development flow
-
-#### Prerequisite
-*. Docker (check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#install-on-mac) for how to install)
-
-#### Running your application with Docker
-1) Run docker terminal (For Mac users only, skip to step2 if you are using Linux)
-
-Whenever you open a new terminal, before you can start using docker, type:
-    
-    $ eval $(docker-machine env)
-
-
-2) Go to your project directory. 
-    
-And create a file called `Dockerfile`. This file is used to program your **docker image**
-   
-    $ touch Dockerfile
-    
-    
-3) Edit your `Dockerfile`. This file is to configure the docker image. You should set up the dependencies here. 
-
-For the syntax, you may refer to [Docker official site](https://docs.docker.com/engine/reference/builder/).
-
-_Example of_ `Dockerfile` for nodejs 
-
-    # Latest Ubuntu LTS
-    FROM ubuntu:14.04
-
-    # Install common apt packages
-    RUN apt-get update && \
-        apt-get install --no-install-recommends -y software-properties-common
-
-    # Install nodejs
-    RUN apt-get install -y nodejs
-    RUN apt-get install nodejs-legacy
-    RUN apt-get install -y npm
-
-    # Install npm modules
-    RUN npm update && \
-        npm install -g gulp
-
-    # Network config
-    EXPOSE 3000
-    
-4) Build your docker image with `Dockerfile` you have created, type
-
-To build docker image, type:
-
-    $ docker build -t image_name [dir_of_folder_containing_dockerfile]
-
-
-5) Run your server within docker container
-
-To run a docker container, type:
-   
-    $ docker run -v [local_mount_dir]:[docker_mount_dir] -p [docker_port]:[local_port] [image_name]
-
-This command is to 
-* load image and start a docker container
-* mount to yours files to container (note that local_mount_dir has to be full path, you may use `-v $(pwd):[docker_mount_dir]` for current dir)
-* map port from container to localhost 
-* ssh into the container
-
-6) Start your service
-
-You are now inside the docker container. Run your service. For example,
-
-    $ cd /docker_mount_dir
-    $ gulp
-
-7) Do ssh tunnelling for docker container (For Mac users only, skip if you are using Linux)
-
-Create a new terminal, type
-    
-    $ eval $(docker-machine env)
-    $ docker-machine ssh default -f -N -L [docker_port]:localhost:[local_port]
-
-This allows you to access the docker container with `localhost`
-
-8) Create other services, if any, by repeating step 1 to step 6 
-
-For example, [mongoDB](https://docs.docker.com/engine/examples/mongodb/)
-
-
-9) Open your browser and go to the url
-
-    http://localhost:[server_port]
-
-You should see the server is up and running.
-
-10) You can then edit your project files as usual and everything works as if you are running server locally.
-
-## Commands for docker
-For useful docker commands, you may check [wiki](https://github.com/altitudelabs/devops/wiki/Docker#cmd).
-   
 ## <a name="deployment-flow"></a>Deployment flow
 
 Aims - Automatically do these:
@@ -148,10 +51,18 @@ Aims - Automatically do these:
 
     
 #### Getting Started - Mac OSX
-1. Make sure there is nothing after `[staging]` and `[production]` in `devops-hosts` file.
+1. Clone this repository into your project `proj/` and add it to `.gitignore`.
+   ```
+   cd proj
+   git clone https://github.com/altitudelabs/devops.git
+   vim .gitignore
+   ```
 
-2. Config `./devops-vars.yml`
-
+2. Create and config `devops-vars.yml` under `proj/`. You may take `example-devops-vars.yml` as starting point.
+    ```
+    cp devops/example-devops-vars.yml ./devops-vars.yml
+    vim devops-vars.yml
+    ```
 
     Yml Config options
 
@@ -163,20 +74,23 @@ Aims - Automatically do these:
     |`git_path` |Github repo, refer to http://github.com/{{ path }}|altitudelabs/nodeJS_template|
     |`app_js` |file for server start|server.js|
 
+3. Go to `devops`. Make sure there is nothing after `[staging]` and `[production]` in `devops-hosts` file.
+    ```
+    cd devops
+    vim devops-hosts
+    ```
 
-3. Go to you project root file, start deployment using
+4. Start deployment using
     ```
     ./devops
     ```
     * Type your Github username and password when it asked.
     * Type your Godaddy username and password when it asked.
-    * After webhook url show up, go to your github repo, click [Settings] -> [Webhooks and Services] -> [Add webhook].
-      * Payload URL url: `domain-name.com:autodeploy-port`, default port 8001.
-      * Content type: `application/json`
-      * `Just the push event`
-      * `Active`
 
-4. You're done! Now, try push new commits to the branch, you should see the site updated automatically.
+5. To deploy again without server setup, run
+    ```
+    ./devops deploy
+    ```
 
 #### Yml Config Variables
 
@@ -195,9 +109,6 @@ Aims - Automatically do these:
 |`app_js` |file for server start|server.js|
 |`bashrc_env_var` |environment variables|PORT={{ nginx_server_port }} NODE_ENV=production|
 |`pm2_start_var`     |variables when start pm2|PORT={{ nginx_server_port }} NODE_ENV=production|
-|`git_autodeploy_port` |port number for webhook|8001|
-|`git_autodeploy_pull_shell` |script to git pull for webhook|sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'|
-|`git_autodeploy_deploy_shell` |script to deploy for webhook|./{{ deploy_sh_file }} && pm2 restart app|
 |`vm_dependencies` |dependencies' name and version|see below|
 
 
@@ -214,7 +125,7 @@ Aims - Automatically do these:
   ```
   or
   ```
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws.yml
+  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/aws.yml
   ```
 
 ###### Provision EC2 instance and Deploy
@@ -223,7 +134,7 @@ Aims - Automatically do these:
   ```
   or
   ```
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/install.yml
+  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/install.yml
   ```
 
 ###### Add subdomain to GoDaddy ac
@@ -232,16 +143,16 @@ Aims - Automatically do these:
   ```
   or
   ```
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/godaddy.yml
+  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/godaddy.yml
   ```
 
-###### Run python script to webhook Github
+###### Deploy
   ```
-  devops webhook
+  devops deploy
   ```
   or
   ```
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/webhook.yml
+  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/webhook.yml
   ```
 
 ###### Terminate EC2 instance and remove from host file
@@ -250,6 +161,6 @@ Aims - Automatically do these:
   ```
   or
   ```
-  ansible-playbook -i devops-hosts --extra-vars="@devops-vars.yml" devops-core/aws-terminate.yml
+  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/aws-terminate.yml
   ```
 

@@ -2,7 +2,6 @@
   - include: nginx-conf.yml
   - include: add-github-key.yml
   - include: git-pull.yml
-#  - include: install-depend.yml
   - name: chmod Deploy script
     sudo: yes
     sudo_user: ubuntu
@@ -15,6 +14,8 @@
     shell: chdir=/home/ubuntu/{{ project_name }} sudo ./{{ deploy_sh_file }}
     tags: run
     register: command_result
-    failed_when: "'FAILED' in command_result.stderr"
+
+  - name: Show deploy script result
+    debug: "{{ command_result.stdout }}" 
 
   - include: start-server.yml
