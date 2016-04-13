@@ -11,4 +11,24 @@
     shell: sudo npm install -g npm
     become: ubuntu
     become_user: yes
+  - name: Run npm post-install shell command
+    shell: sudo chown -R $USER ~/.npm && sudo chown -R $USER {{ npm_install_path }}
+    become: ubuntu
+    become_user: yes
+  - name: Set npm to version = {{ npm_version }})
+    shell: sudo npm install -g npm@{{ npm_version }}
+    become: ubuntu
+    become_user: yes
+  - name: Install nodejs version manager
+    npm: name=n global=yes
+  - name: Update nodejs version
+    register: result
+    shell: n {{ nodejs_version }}
+    when: nodejs_version is defined
+  - name: Rebuild node-sass
+    shell: npm rebuild node-sass
+  - name: Install nodejs version manager
+    npm: name={{ item }} global=yes
+    with_items:
+      - "{{ npm_packages }}"
 ...

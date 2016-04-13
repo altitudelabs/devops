@@ -1,0 +1,5 @@
+---
+nodejs_version: "{{ vm_dependencies.nodejs.version | default(4.4.1) }}"
+npm_version: "{{ vm_dependencies.npm.version | default(latest) }}"
+npm_packages: "{{ vm_dependencies.npm.packages }}"
+npm_install_path: "/usr/local/lib/node_modules"

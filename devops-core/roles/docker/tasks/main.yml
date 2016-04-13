@@ -1,8 +1,0 @@
----
-- name: Install docker
-  shell: sudo curl -fsSL https://get.docker.com/ | sh
-
-- name: Ensure docker-compose is installed and available
-  shell: sudo curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-- name: chmod docker-compose
-  shell: sudo chmod +x /usr/local/bin/docker-compose

@@ -1,14 +1,4 @@
 ---
-  - name: With the newly provisioned EC2 node configure that thing
-    hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
-    become: yes # On EC2 nodes, this is automatically passwordless.
-    remote_user: ubuntu # This is the username for all ubuntu images, rather than root, or something weird.
-    gather_facts: True  #We need to re-enable this, as we turned it off earlier.
-    vars_files:
-      - env_vars/base.yml
-    roles:
-      - nginx
-      - pm2
   - name: Deploy node app
     hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
     become: yes # On EC2 nodes, this is automatically passwordless.
@@ -24,7 +14,7 @@
         prompt: "Enter your Github Password"
         private: true
     roles:
-      - { role: deploy-node-app, tags: ['deploy'] }
+      - deploy-node-app
   - name: Open url in browser
     hosts: local
     connection: local
