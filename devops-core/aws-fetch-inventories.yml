@@ -1,0 +1,9 @@
+- name: Provision an EC2 node
+  hosts: local
+  connection: local
+  gather_facts: False
+  tags: provisioning
+  vars_files:
+    - env_vars/base.yml
+  roles:
+    - fetch-ec2-inventories

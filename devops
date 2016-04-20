@@ -1,20 +1,18 @@
 #!/bin/bash
-
+source ~/.bashrc
+source ~/.bash_profile
 TASK="$1"
 if [[ $1 == "aws" ]]
 then
-  source ~/.bashrc
-  source ~/.bash_profile
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/aws.yml
+elif [[ $1 == "aws-fetch-inventories" ]]
+then
+  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/aws-fetch-inventories.yml
 elif [[ $1 == "aws-check-exists" ]]
 then
-  source ~/.bashrc
-  source ~/.bash_profile
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/aws-check-exists.yml
 elif [[ $1 == "aws-terminate" ]]
 then
-  source ~/.bashrc
-  source ~/.bash_profile
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/aws-terminate.yml
 elif [[ $1 == "install" ]]
 then
@@ -26,7 +24,5 @@ elif [[ $1 == "deploy" ]]
 then
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/deploy.yml
 else
-  source ~/.bashrc
-  source ~/.bash_profile
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/run-all.yml
 fi
