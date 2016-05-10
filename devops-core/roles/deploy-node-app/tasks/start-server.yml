@@ -8,15 +8,18 @@
   - name: Start server <2/3> Start process with pm2
     become: yes
     become_user: ubuntu
-    shell: chdir=/home/ubuntu/{{ project_name }} sudo {{ pm2_start_var }} pm2 start {{app_js}} --name "app"
+    shell: chdir=/home/ubuntu/{{ project_name }} sudo {{ pm2_start_var }} NODE_ENV={{ NODE_ENV | default(production) }} pm2 start {{app_js}} --name "app"
     register: pm2start
     ignore_errors: True
+    tags: node_env
+
   - name: Restart process with pm2
     become: yes
     become_user: ubuntu
-    shell: chdir=/home/ubuntu/{{ project_name }} sudo {{ pm2_start_var }} pm2 restart app
+    shell: chdir=/home/ubuntu/{{ project_name }} sudo {{ pm2_start_var }} NODE_ENV={{ NODE_ENV | default(production) }} pm2 restart app
     register: pm2start
     when: "'ERROR' in pm2start.stderr"
+    tags: node_env
 
   - name: Start server <3/3> Print pm2 status
     debug: var=pm2start.stdout_lines
