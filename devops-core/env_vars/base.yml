@@ -16,8 +16,8 @@ deploy_sh_file:                         deploy.sh
 
 bashrc_env_var: |
                                         PORT={{ nginx_server_port }}
-                                        NODE_ENV=production
-pm2_start_var:                          PORT={{ nginx_server_port }} NODE_ENV=production
+pm2_start_var: >-
+                                        PORT={{ nginx_server_port }}
 
 git_autodeploy_port:                    8001
 git_autodeploy_pull_shell:              sudo ssh-agent bash -c 'ssh-add /home/ubuntu/.ssh/github_rsa; git pull'
