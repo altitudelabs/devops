@@ -2,3 +2,4 @@
 production
 staging
 *.retry
+*.pyc

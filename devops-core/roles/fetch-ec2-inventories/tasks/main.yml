@@ -1,0 +1,20 @@
+---
+  - name: Copy ec2 dynamic inventory config and script
+    template: src={{ item }} dest=/tmp/{{ item }} mode=777
+    with_items:
+      - ec2.ini
+      - ec2.py
+
+  - name: Run ec2 dynamic inventory script
+    shell: chdir=/tmp python ec2.py --refresh-cache
+    register: inventories
+
+  - debug: var=inventories.stdout_lines
+
+  - name: Create inventory file
+    copy: content="" dest={{ host_file_path }} force=yes
+
+  - name: Add host to inventory file
+    local_action: lineinfile dest="{{ host_file_path }}" line="{{ item }}"
+    with_items: inventories.stdout_lines
+...
