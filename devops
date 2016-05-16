@@ -22,7 +22,7 @@ then
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/godaddy.yml
 elif [[ $1 == "deploy" && $2 != '' ]]
 then
-  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/deploy.yml -l ${@:2}
+  ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/deploy.yml ${@:2}
 elif [[ $1 == "deploy" && $2 == '' ]]
 then
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/deploy.yml
