@@ -1,9 +1,15 @@
 ---
-  - name: Start server <1/3> Setup environment
-    blockinfile: |
-      dest=/etc/environment
-      content='{{ bashrc_env_var }}'
-    tags: bashrc
+  # - name: Start server <1/3> Setup environment
+  #   blockinfile: |
+  #     dest=/etc/environment
+  #     content='{{ bashrc_env_var }}'
+  #   tags: bashrc
+  - name: Start server <1/3> Kill pm2
+    become: yes
+    become_user: ubuntu
+    shell: sudo pm2 kill
+    ignore_errors: True
+    tags: node_env
 
   - name: Start server <2/3> Start process with pm2
     become: yes
