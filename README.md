@@ -12,7 +12,6 @@ Aims - Automatically do these:
 * run deploy.sh to deploy repo
 * pm2 run server
 * add godaddy subdomain
-* Webhook Github
 
 #### Things you need
 * Github Project (You need Admin permission to access 'Setting' page )
@@ -47,9 +46,9 @@ Aims - Automatically do these:
     export AWS_ACCESS_KEY={{ aws_access_key }}
     export AWS_SECRET_KEY={{ aws_secret_key }}
     ```
-    
 
-    
+
+
 #### Getting Started - Mac OSX
 1. Clone this repository into your project `proj/` and add it to `.gitignore`.
    ```
@@ -107,7 +106,6 @@ Aims - Automatically do these:
 |`git_staging_branch` |Branch for staging|staging|
 |`deploy_sh_file` |deploy shell script file name which store in project root folder|deploy.sh|
 |`app_js` |file for server start|server.js|
-|`bashrc_env_var` |environment variables|PORT={{ nginx_server_port }} NODE_ENV=production|
 |`pm2_start_var`     |variables when start pm2|PORT={{ nginx_server_port }} NODE_ENV=production|
 |`vm_dependencies` |dependencies' name and version|see below|
 
@@ -116,12 +114,12 @@ Aims - Automatically do these:
 
 ###### Run all of them
   ```
-  devops
+  ./devops
   ```
 
 ###### Create EC2 instance and add to host file
   ```
-  devops aws
+  ./devops aws
   ```
   or
   ```
@@ -130,7 +128,7 @@ Aims - Automatically do these:
 
 ###### Provision EC2 instance and Deploy
   ```
-  devops install
+  ./devops install
   ```
   or
   ```
@@ -139,7 +137,7 @@ Aims - Automatically do these:
 
 ###### Add subdomain to GoDaddy ac
   ```
-  devops godaddy
+  ./devops godaddy
   ```
   or
   ```
@@ -148,19 +146,24 @@ Aims - Automatically do these:
 
 ###### Deploy
   ```
-  devops deploy
+  ./devops deploy
   ```
   or
   ```
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/webhook.yml
   ```
 
+###### Deploy shell script options
+  You may use it with more ansible-playbook cli options
+  ```
+  ./devops deploy --extra-vars="@../devops-ignore.yml" -l staging
+  ```
+
 ###### Terminate EC2 instance and remove from host file
   ```
-  devops aws-terminate
+  ./devops aws-terminate
   ```
   or
   ```
   ansible-playbook -i devops-hosts --extra-vars="@../devops-vars.yml" devops-core/aws-terminate.yml
   ```
-

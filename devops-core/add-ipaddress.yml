@@ -12,7 +12,7 @@
     when: "ip_address not in launchedGroup.msg"
 
   - name: Add instance to host group
-    add_host: name={{ ip_address }} groups={{ itype }} ansible_ssh_private_key_file=~/.ssh/{{ keypair }}.pem
+    add_host: name={{ ip_address }} groups={{ itype }} ansible_ssh_private_key_file=~/.ssh/{{ keypair }}.pem NODE_ENV={{ itype }}
     when: "ip_address not in launchedGroup.msg"
 
   - name: Add instance to host file
